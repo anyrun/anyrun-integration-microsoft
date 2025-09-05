@@ -23,7 +23,7 @@ This playbook extracts URL from incidents and submit it for analysis in the ANY.
 
 - Click below to deploy Azure Logic App with **Flex Consumption plan**
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-URL%2FANYRUN-Sandbox-URL.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-URL%2FANYRUN-Sandbox-URL.json)
 
 - Enter the parameters required for deploying the Logic App and click **Review + create**.
 

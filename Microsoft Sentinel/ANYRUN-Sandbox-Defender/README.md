@@ -30,7 +30,7 @@ After the analysis is completed in the ANY.RUN Sandbox, its most significant res
 
 - Click below to deploy Azure Logic App with **Flex Consumption plan**
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-Defender%2FANYRUN-Sandbox-Defender.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-Defender%2FANYRUN-Sandbox-Defender.json)
 
 - Enter the parameters required for deploying the Logic App.
 

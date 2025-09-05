@@ -83,7 +83,7 @@ After the analysis is completed in the ANY.RUN Sandbox, its most significant res
 
 ![click_upload_file](images/004.png)
 
-- Click **Upload file to library** again, select the script from your file system (after downloading it from our [library](https://github.com/rollehfoh/ANY.RUN/tree/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender/scripts)), or create your own script. After selecting, click **Submit**.
+- Click **Upload file to library** again, select the script from your file system (after downloading it from our [library](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender/scripts)), or create your own script. After selecting, click **Submit**.
 
 ![select_file_to_upload](images/005.png)
 

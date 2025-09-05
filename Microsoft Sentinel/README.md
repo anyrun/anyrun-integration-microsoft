@@ -26,7 +26,7 @@ As a result, your Microsoft Sentinel incidents will include a verdict, threat sc
 
 This playbook extracts URL from incidents and submit it for analysis in the ANY.RUN Sandbox to enrich the incident with a verdict using a single Azure Logic App.
 
-[Open connector page](https://github.com/rollehfoh/ANY.RUN/tree/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
+[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
 
 ## Analyze Files from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
@@ -36,13 +36,13 @@ Templates are provided for endpoints running the following operating systems:
 - Windows
 - UNIX (Ubuntu, Debian)
 
-[Open connector page](https://github.com/rollehfoh/ANY.RUN/tree/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
+[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
 
 ## Analyze All Entities from Microsoft Sentinel Incidents via ANY.RUN Sandbox and Microsoft Defender for Endpoint
 
 This template makes the incident enrichment process in Microsoft Sentinel even more automated if you are also using Microsoft Defender for Endpoint (MDE). In this case, the entire automation mechanism can be combined into a single Azure Logic App, leveraging MDE's capabilities to extract files from endpoints via API.
 
-[Open connector page](https://github.com/rollehfoh/ANY.RUN/tree/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)
+[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)
 
 ## Prerequisites
 

@@ -28,11 +28,11 @@ Templates are provided for endpoints running the following operating systems:
 
 The connector consists of two Azure Logic Apps: 
 - Parent workflow (varies depending on the host operating system):
-  - [ANYRUN-Sandbox-File-Windows](https://github.com/rollehfoh/ANY.RUN/blob/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Windows.json)
-  - [ANYRUN-Sandbox-File-Ubuntu](https://github.com/rollehfoh/ANY.RUN/blob/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Ubuntu.json)
-  - [ANYRUN-Sandbox-File-Debian](https://github.com/rollehfoh/ANY.RUN/blob/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Debian.json)
+  - [ANYRUN-Sandbox-File-Windows](https://github.com/anyrun/anyrun-integration-microsoft/blob/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Windows.json)
+  - [ANYRUN-Sandbox-File-Ubuntu](https://github.com/anyrun/anyrun-integration-microsoft/blob/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Ubuntu.json)
+  - [ANYRUN-Sandbox-File-Debian](https://github.com/anyrun/anyrun-integration-microsoft/blob/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Sandbox-File-Debian.json)
 - Child workflow (uniform for all operating systems):
-  - [ANYRUN-Submit-File-to-Blob](https://github.com/rollehfoh/ANY.RUN/blob/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Submit-File-to-Blob.json)
+  - [ANYRUN-Submit-File-to-Blob](https://github.com/anyrun/anyrun-integration-microsoft/blob/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File/Logic%20Apps/ANYRUN-Submit-File-to-Blob.json)
 
 ## Logic Apps description
 
@@ -45,7 +45,7 @@ This Logic App is a child workflow invoked by the parent to handle file upload f
 
  > **Note:** The child playbook in this connector is designed to extract files from the endpoint and upload them to Azure Blob Storage using Microsoft Defender for Endpoint (MDE). If you use a different solution instead of MDE, you can replace this playbook with one adapted for your infrastructure.
 >
-> If you are still using MDE to protect your devices, we recommend using the template of our connector **[Microsoft Sentinel & Microsoft Defender for Endpoint](https://github.com/rollehfoh/ANY.RUN/tree/main/connectors/Microsoft/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)**.
+> If you are still using MDE to protect your devices, we recommend using the template of our connector **[Microsoft Sentinel & Microsoft Defender for Endpoint](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)**.
 
 ## Deployment
 
@@ -57,7 +57,7 @@ First, you need to deploy the child Logic App, as its parameters are required fo
 
 - Click below to deploy Child Azure Logic App with **Flex Consumption plan**
  
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Submit-File-to-Blob.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Submit-File-to-Blob.json)
 
 - Enter the parameters required for deploying the Logic App and click **Review + create**.
 
@@ -79,11 +79,11 @@ First, you need to deploy the child Logic App, as its parameters are required fo
 
 - Click below to deploy Parent Azure Logic App with **Flex Consumption plan**
   - ANYRUN-Sandbox-File-Windows
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Windows.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Windows.json)
   - ANYRUN-Sandbox-File-Ubuntu
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Ubuntu.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Ubuntu.json)
   - ANYRUN-Sandbox-File-Debian
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Debian.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FANYRUN-Sandbox-File%2FLogic%2520Apps%2FANYRUN-Sandbox-File-Debian.json)
 
 - Enter the parameters required for deploying the Logic App and click **Review + create**.
 

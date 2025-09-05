@@ -48,6 +48,7 @@ After the analysis is completed in the ANY.RUN Sandbox, its most significant res
 | keyVaultUri                 | Key Vault URI (copy Vault URI from your Key Vault overview).                |
 | azureBlobStorageAccountName | Azure Blob Storage Account Name.                                            |
 | azureBlobStorageContainerName | Azure Blob Storage Container Name.                                        |
+| logAnalyticsWorkspaceName   | Log Analytics Workspace Name.
 
 ## Microsoft Defender for Endpoint configuration and additional script
 

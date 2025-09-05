@@ -48,7 +48,25 @@ After the analysis is completed in the ANY.RUN Sandbox, its most significant res
 | keyVaultUri                 | Key Vault URI (copy Vault URI from your Key Vault overview).                |
 | azureBlobStorageAccountName | Azure Blob Storage Account Name.                                            |
 | azureBlobStorageContainerName | Azure Blob Storage Container Name.                                        |
-| logAnalyticsWorkspaceName   | Log Analytics Workspace Name.
+| logAnalyticsWorkspaceName   | Log Analytics Workspace Name.                                               |
+
+## Storage Account Configuration
+
+To generate an SAS token for Azure Blob Storage, you need to assign the appropriate role directly to the Logic App.
+
+- Open your Storage Account.
+
+- Navigate to **Access Control (IAM)** and click Add.
+
+![storage_logic_app](images/010.png)
+
+- Specify the Logic App `ANYRUN-Sandbox-Defender`.
+
+- Select the following role:
+
+| Name                       | Description                                                                 |
+|----------------------------|-----------------------------------------------------------------------------|
+| Storage Account Contributor | Lets you manage storage accounts, including accessing storage account keys which provide full access to storage account data. |
 
 ## Microsoft Defender for Endpoint configuration and additional script
 

@@ -627,7 +627,7 @@
                                                     "subscriptions": "@{variables('Subscription ID')}",
                                                     "resourcegroups": "@{variables('Resource Group Name')}",
                                                     "resourcetype": "Log Analytics Workspace",
-                                                    "resourcename": "@{parameters('Log Analytics Workspace Name')}",
+                                                    "resourcename": "@{variables('Log Analytics Workspace Name')}",
                                                     "timerange": "7d"
                                                 }
                                             }

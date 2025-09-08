@@ -1114,7 +1114,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 50
                                                         }
                                                     }
@@ -1168,7 +1168,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }
@@ -1204,7 +1204,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }
@@ -1240,7 +1240,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 50
                                                         }
                                                     }
@@ -1366,7 +1366,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }
@@ -1420,7 +1420,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }
@@ -1456,7 +1456,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }
@@ -1492,7 +1492,7 @@
                                                             "pattern_type": "stix",
                                                             "valid_from": "@utcNow('yyyy-MM-ddTHH:mm:ssZ')",
                                                             "valid_until": "@addDays(utcNow(), 365, 'yyyy-MM-ddTHH:mm:ssZ')",
-                                                            "description": "https://app.any.run/tasks/",
+                                                            "description": "https://app.any.run/tasks/@{variables('Task ID')}",
                                                             "confidence": 100
                                                         }
                                                     }

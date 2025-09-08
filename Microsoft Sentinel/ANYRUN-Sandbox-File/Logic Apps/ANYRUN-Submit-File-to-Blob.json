@@ -144,10 +144,6 @@
                                     {
                                         "name": "Machine OS",
                                         "type": "string"
-                                    },
-                                    {
-                                        "name": "Log Analytics Workspace Name",
-                                        "type": "string"
                                     }
                                 ]
                             }

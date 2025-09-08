@@ -68,6 +68,18 @@ This template makes the incident enrichment process in Microsoft Sentinel even m
 
 ![register_app](images/004.png)
 
+### Secret Value of created App
+
+- To generate the Client Secret, go to your application's page and click **Generate Secret** in the **Certificates & secrets** tab.
+
+![cert_and_secrets_tab](images/040.png)
+
+- Specify the key name and its expiration date (optional).
+
+![generate_secret](images/041.png)
+
+- Copy and **save the Secret Value**. This value is required for deploying the connector later.
+
 ### API Permissions for new App
 
 #### Key Vault API Permissions

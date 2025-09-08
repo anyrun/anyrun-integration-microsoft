@@ -4,7 +4,7 @@
     "parameters": {
         "logicAppName": {
             "type": "string",
-            "defaultValue": "ANYRUN-Sandbox-File-Windows"
+            "defaultValue": "ANYRUN-Sandbox-File-Ubuntu"
         },
         "azureTenantId": {
             "type": "string",

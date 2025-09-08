@@ -418,7 +418,7 @@
                                     "inputs": {
                                         "host": {
                                             "workflow": {
-                                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', variables('Child Logic App Name'))]"
+                                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Logic/workflows/', parameters('childWorkflowName'))]"
                                             },
                                             "triggerName": "When_a_HTTP_request_is_received"
                                         }

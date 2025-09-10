@@ -10,47 +10,60 @@ ______________________________________________________________________
 
 ## Overview
 
-This repository contains the necessary resources for integrating Microsoft Sentinel with the ANY.RUN Sandbox. The connectors enrich Microsoft Sentinel incidents by analyzing URLs or files associated with them in the ANY.RUN Sandbox.
+This repository contains resources required for integrating Microsoft Sentinel with ANY.RUN Sandbox. 
 
-As a result, your Microsoft Sentinel incidents will include a verdict, threat score, malware tags and a link to the detailed analysis in the ANY.RUN UI, allowing you to explore the object's behavior in a real infrastructure environment. Additionally, your Threat Intelligence portal in Sentinel will be enriched with Indicators of Compromise (IoCs) extracted during the sandbox analysis.
+The connectors enrich Microsoft Sentinel incidents by analyzing URLs or files associated with them in the sandbox. As a result, your Microsoft Sentinel incidents will include detailed info on threats. You will also be able to explore the object's behavior in a real infrastructure environment. 
 
-## Connector capabilities
-- Incident enrichment:
-  - Analysis Verdict and Threat score
-  - Malware Tags
-  - Table with IoC's detected during the analysis
-  - Analysis Report Link
-- Uploading IoC's detected during the analysis to Sentinel Threat Intelligence portal
+Additionally, your Threat Intelligence portal in Sentinel will be enriched with Indicators of Compromise (IOCs) extracted during the sandbox analysis. You can try out the connectors for free by [getting 14-day trial](https://any.run/demo/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktodemo) of ANY.RUN Sandbox’s Enterprise plan. 
+
+## Capabilities of connectors
+
+- Enrichment of incidents with:
+  - Analysis verdict (malicious, suspicious, unknown) 
+  - Threat score (from 0 to 100) 
+  - Malware tags (e.g. threat family) 
+  - Table with IOC's detected during the analysis 
+  - Link to the analysis session in the sandbox 
+- Uploading IOC's detected during the analysis to Sentinel Threat Intelligence portal 
 
 ## Analyze URLs from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
-This playbook extracts URL from incidents and submit it for analysis in the ANY.RUN Sandbox to enrich the incident with a verdict using a single Azure Logic App.
+**Latest Version:** 1.0.0
+**Release Date:** 10/09/2025
 
-[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
+This playbook extracts URLs from incidents and submits it for analysis in ANY.RUN Sandbox to enrich the incident with a verdict using Azure Logic App. 
+
+[Open connector's page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
 
 ## Analyze Files from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
-This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to the ANY.RUN Sandbox using an Azure Logic App.
+**Latest Version:** 1.0.0
+**Release Date:** 10/09/2025
+
+This playbook allows you to send files from incidents for analysis in ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to ANY.RUN Sandbox using a single Azure Logic App. 
 
 Templates are provided for endpoints running the following operating systems:
 - Windows
 - UNIX (Ubuntu, Debian)
 
-[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
+[Open connector's page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
 
 ## Analyze All Entities from Microsoft Sentinel Incidents via ANY.RUN Sandbox and Microsoft Defender for Endpoint
 
-This template makes the incident enrichment process in Microsoft Sentinel even more automated if you are also using Microsoft Defender for Endpoint (MDE). In this case, the entire automation mechanism can be combined into a single Azure Logic App, leveraging MDE's capabilities to extract files from endpoints via API.
+**Latest Version:** 1.0.0
+**Release Date:** 10/09/2025
 
-[Open connector page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)
+This playbook makes the incident enrichment process in Microsoft Sentinel even more automated if you are also using Microsoft Defender for Endpoint (MDE). In this case, the entire automation mechanism can be combined into a single Azure Logic App, leveraging MDE's capabilities to extract files from endpoints via API.
+
+[Open connector's page](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)
 
 ## Prerequisites
 
 ### Key Vault
 
-- You need the Hunter pricing plan in ANY.RUN and your API key. We recommend storing your API key in Azure Key Vault. To do this, select your existing Key Vault or create a new one. Then, navigate to the **Objects** > **Secrets** section and create a new secret named `ANYRUN-APIKey`.
+- You need the Enterprise pricing plan in ANY.RUN and your API key. We recommend storing your API key in Azure Key Vault. To do this, select your existing Key Vault or create a new one. Then, navigate to the **Objects** > **Secrets** section and create a new secret named `ANYRUN-APIKey`.
 
-  > **Note:** It is recommended to keep this name unchanged, as otherwise, you will need to update it later in the deployed Logic App.
+  > **Note:** It is recommended to keep this name unchanged. Otherwise, you will need to update it later in the deployed Logic App.
 
 ![key_vault](images/001.png)
 
@@ -84,7 +97,7 @@ This template makes the incident enrichment process in Microsoft Sentinel even m
 
 #### Key Vault API Permissions
 
-- For the created application, add the following permissions for API connections in the **Manage** > **API permissions** > **Add a permission** tab:
+- Go this tab: **Manage** > **API permissions**. Click Add a permission and choose the following options: 
 
 ![add_permission](images/007.png)
 
@@ -100,7 +113,7 @@ This template makes the incident enrichment process in Microsoft Sentinel even m
 
 #### Microsoft Defender ATP API Permissions
 
-  > **Note:** This article is only required for workflows where you use Microsoft Defender for Endpoint (MDE) to extract files from the endpoint.
+  > **Note:** This section is only required if you use Microsoft Defender for Endpoint (MDE) to extract files from the endpoint.
 
 - Add an API connection for **WindowsDefenderATP**. Select the corresponding API in the **APIs my organization uses** tab.
 
@@ -173,7 +186,7 @@ Since the connectors use various resources available in Azure, the created appli
 
 ### Storage Account
 
-  > **Note:** This article is only required for workflows where you use Azure Blob Storage to keeping file from the endpoint before submitting it to ANY.RUN Sandbox.
+  > **Note:** This section is only required for workflows where you use Azure Blob Storage to store files from the endpoint before submitting it to ANY.RUN Sandbox.
 
 - Go to Azure Storage Accounts.
 
@@ -187,11 +200,11 @@ Since the connectors use various resources available in Azure, the created appli
 
 ![azure_sa_review_and_create](images/012.png)
 
-- After that you should open your Storage Account and go to **Access Control (IAM)** > **Add**.
+- Open your Storage Account and go to **Access Control (IAM)** > **Add**.
 
 ![sa_iam_add](images/013.png)
 
-- Select your App `ANYRUN-App`.
+- Select your app — `ANYRUN-App`.
 
 ![sa_app_select](images/014.png)
 
@@ -208,13 +221,13 @@ Since the connectors use various resources available in Azure, the created appli
 
 ![sa_navigation](images/016.png)
 
-- Click **Add container**, type the **Name** for it and **Create**.
+- Click **Add container**, enter its name and click **Create**.
 
 ![sa_container_create](images/017.png)
 
 ### Deployment
 
-- After completing the preliminary settings above, you can proceed to deploy the Azure Logic Apps necessary for integrating Microsoft Sentinel and ANY.RUN Sandbox:
+- After completing the preliminary settings above, you can proceed to deploy Azure Logic Apps required for integrating Microsoft Sentinel and ANY.RUN Sandbox: 
   - [ANYRUN-Sandbox-URL](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
   - [ANYRUN-Sandbox-File](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
   - [ANYRUN-Sandbox-Defender](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)

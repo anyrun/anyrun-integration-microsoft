@@ -28,8 +28,8 @@ Additionally, your Threat Intelligence portal in Sentinel will be enriched with 
 
 ## Analyze URLs from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
-**Latest Version:** 1.0.0
-**Release Date:** 10/09/2025
+**Latest Version:** 1.0.0.
+**Release Date:** 10/09/2025.
 
 This playbook extracts URLs from incidents and submits it for analysis in ANY.RUN Sandbox to enrich the incident with a verdict using Azure Logic App. 
 

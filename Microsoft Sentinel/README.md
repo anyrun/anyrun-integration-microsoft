@@ -28,8 +28,7 @@ Additionally, your Threat Intelligence portal in Sentinel will be enriched with 
 
 ## Analyze URLs from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
-**Latest Version:** 1.0.0
-
+**Latest Version:** 1.0.0  
 **Release Date:** 10/09/2025
 
 This playbook extracts URLs from incidents and submits it for analysis in ANY.RUN Sandbox to enrich the incident with a verdict using Azure Logic App. 
@@ -38,7 +37,7 @@ This playbook extracts URLs from incidents and submits it for analysis in ANY.RU
 
 ## Analyze Files from Microsoft Sentinel Incidents via ANY.RUN Sandbox
 
-**Latest Version:** 1.0.0
+**Latest Version:** 1.0.0  
 **Release Date:** 10/09/2025
 
 This playbook allows you to send files from incidents for analysis in ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to ANY.RUN Sandbox using a single Azure Logic App. 
@@ -51,7 +50,7 @@ Templates are provided for endpoints running the following operating systems:
 
 ## Analyze All Entities from Microsoft Sentinel Incidents via ANY.RUN Sandbox and Microsoft Defender for Endpoint
 
-**Latest Version:** 1.0.0
+**Latest Version:** 1.0.0  
 **Release Date:** 10/09/2025
 
 This playbook makes the incident enrichment process in Microsoft Sentinel even more automated if you are also using Microsoft Defender for Endpoint (MDE). In this case, the entire automation mechanism can be combined into a single Azure Logic App, leveraging MDE's capabilities to extract files from endpoints via API.

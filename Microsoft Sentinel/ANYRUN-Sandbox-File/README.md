@@ -10,6 +10,8 @@ ______________________________________________________________________
 
 ## Overview
 
+> **Note:** If you are using the Microsoft Sentinel & Microsoft Defender for Endpoint bundle in your infrastructure, we strongly recommend using the **[corresponding connector](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)** for this case.
+
 This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. 
 It uploads the file from the endpoint to Azure Blob Storage and then forwards it to the ANY.RUN Sandbox using an Azure Logic App.
 

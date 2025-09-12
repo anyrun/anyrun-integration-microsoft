@@ -6,7 +6,7 @@
 
 ______________________________________________________________________
 
-# Microsoft Sentinel Connector for automated File analysis via ANY.RUN Malware Sandbox
+# Microsoft Sentinel Connector for automated File analysis via ANY.RUN's Malware Sandbox
 
 ## Overview
 

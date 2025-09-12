@@ -81,4 +81,4 @@ ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availa
 
 ![parallel_analysis](images/003.png)
 
-> **Note**: To upgrade your pricing plan capabilities, [contact us](https://app.any.run/contact-us).
+> **Note**: To upgrade your pricing plan capabilities, [contact us](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktocontactus).

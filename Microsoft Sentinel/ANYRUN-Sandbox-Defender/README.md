@@ -6,16 +6,16 @@
 
 ______________________________________________________________________
 
-# Microsoft Sentinel Connector for automated File and URL analysis via ANY.RUN Malware Sandbox and Microsoft Defender for Endpoint
+# Microsoft Sentinel Connector for automated File and URL analysis via ANY.RUN's Malware Sandbox and Microsoft Defender for Endpoint
 
 ## Overview
 
 This template makes the incident enrichment process in Microsoft Sentinel even more automated if you are also using Microsoft Defender for Endpoint (MDE). 
 In this case, the entire automation mechanism can be combined into a single Azure Logic App, leveraging MDE's capabilities to extract files from UNIX- or Windows-endpoints using the bash and PowerShell script we offer.
 
-This Logic App allows you to send both URLs and files contained in the incident entities for analysis in the ANY.RUN Sandbox. The playbook enables initiating Live Response sessions to hosts connected to Microsoft Defender for Endpoint. Within these Live Response sessions, a script is launched that extracts files from the endpoint and sends them for temporary storage to an Azure Blob Storage container. Once the file arrives in Blob Storage, the Logic App retrieves it and forwards it for analysis to the ANY.RUN API.
+This Logic App allows you to send URLs and files contained in the incident entities for analysis in ANY.RUN Sandbox. The playbook enables initiating Live Response sessions to hosts connected to Microsoft Defender for Endpoint. Within these Live Response sessions, a script is launched that extracts files from the endpoint and sends them for temporary storage to an Azure Blob Storage container. Once the file arrives in Blob Storage, the Logic App retrieves it and forwards it for analysis to ANY.RUN API.
 
-After the analysis is completed in the ANY.RUN Sandbox, its most significant results are transmitted to the incident: verdict, score, and tags, which help you obtain more detailed information about whether the object of interest is dangerous. Additionally, IoCs discovered during the analysis in the ANY.RUN Sandbox will be added to the Sentinel TI Portal.
+After the analysis is completed in ANY.RUN Sandbox, its key results (verdict, score, and tags) enrich the incident. They help you obtain more detailed information on your sample. Additionally, IOCs discovered during the analysis in ANY.RUN Sandbox will be added to the Sentinel TI Portal.
 
 ## Requirements:
 - ANY.RUN API-Key
@@ -94,7 +94,7 @@ To generate an SAS token for Azure Blob Storage, you need to assign the appropri
 
 - Open the required device.
 
-- Click on `...` in the upper right corner and **Initiate Live Response session**.
+- Click on `...` in the upper right corner and then **Initiate Live Response Session**.
 
 ![run_live_response](images/003.png)
 
@@ -102,7 +102,7 @@ To generate an SAS token for Azure Blob Storage, you need to assign the appropri
 
 ![click_upload_file](images/004.png)
 
-- Click **Upload file to library** again, select the script from your file system (after downloading it from our [library](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender/scripts)), or create your own script. After selecting, click **Submit**.
+- Click **Upload file to library** again, select the script from your file system (after downloading it from our [library](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender/scripts)), or create your own script. After that, click **Submit**.
 
 ![select_file_to_upload](images/005.png)
 
@@ -116,7 +116,7 @@ The Logic App we propose dynamically selects the script extension (.sh or .ps1) 
 
 - In the Logic app designer, expand the following action blocks: **For each - Host** > **For each - Find file path on the target host** > **Condition - Check if KQL Result is not empty (True)** > **Condition - Windows Machine**.
 
-- In the expanded condition, select the actions **Set variable - Windows OS Script Name** and **Set variable - UNIX OS Script Name** and change the script name to the one you need (additionally, you may also need to change the script launch parameters in the actions **Set variable - Windows OS Script Parameters** and **Set variable - UNIX OS Script Parameters**).
+- In the expanded condition, select the actions **Set variable - Windows OS Script Name** and **Set variable - UNIX OS Script Name** and change the script name to the one you need. Additionally, you might also need to change the script launch parameters in the actions **Set variable - Windows OS Script Parameters** and **Set variable - UNIX OS Script Parameters**. 
 
 ![change_script_name](images/006.png)
 
@@ -124,7 +124,7 @@ The Logic App we propose dynamically selects the script extension (.sh or .ps1) 
 
 ### ANY.RUN Sandbox analysis parameters
 
-ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using any environments. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required File.
+ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using a customizable VM environment. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required file.
 
 > **Note:** You can learn more about the capabilities of ANY.RUN Sandbox by reviewing our **[API documentation](https://any.run/api-documentation/)**.
 
@@ -140,7 +140,7 @@ The main setup and customization of the Logic App is available through the graph
 
 ![analysis_action_url](images/007.png)
 
-- For File analysis:
+- For file analysis:
 
  > **Note:** HTTP request body consists of multipart/form-data
 
@@ -162,10 +162,10 @@ The main setup and customization of the Logic App is available through the graph
 
 ### Simultaneous Analysis of Objects in ANY.RUN Sandbox
 
-ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple URLs or Files, each analysis will run sequentially (a new File analysis won't start until the previous one finishes, to avoid errors).
+ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple files, each analysis will run sequentially (a new file analysis won't start until the previous one is finished).
 
-- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, open the **For each - URLs** and **For each - detonate files to ANY.RUN Sandbox** loop > **Settings** and increase the **Degree of parallelism** value. It is recommended to set a value that does not exceed the number of possible parallel analyses in ANY.RUN Sandbox for your pricing plan.
+- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, open `For each - URLs` and `For each - detonate files to ANY.RUN Sandbox` loop > `Settings` and increase the `Degree of parallelism` value. Note that you should set a value that does not exceed the number of parallel analyses available at your pricing plan.
 
 ![parallel_analysis](images/009.png)
 
-> **Note**: To upgrade your pricing plan capabilities, [contact us](https://app.any.run/contact-us).
+> **Note**: To expand your capabilities by upgrading your pricing plan, [contact us](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktocontactus).

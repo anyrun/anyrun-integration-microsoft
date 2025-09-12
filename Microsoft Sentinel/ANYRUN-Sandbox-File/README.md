@@ -12,8 +12,7 @@ ______________________________________________________________________
 
 > **Note:** If you are using the Microsoft Sentinel & Microsoft Defender for Endpoint bundle in your infrastructure, we strongly recommend using the **[corresponding connector](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)** for this case.
 
-This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. 
-It uploads the file from the endpoint to Azure Blob Storage and then forwards it to the ANY.RUN Sandbox using an Azure Logic App.
+This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to ANY.RUN Sandbox using an Azure Logic App.
 
 Templates are provided for endpoints running the following operating systems:
 - Windows
@@ -127,7 +126,7 @@ To generate an SAS token for Azure Blob Storage, you need to assign the appropri
 
 ### ANY.RUN Sandbox analysis parameters
 
-ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using any environments. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required File.
+ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using a customizable VM environment. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required file.
 
 > **Note:** You can learn more about the capabilities of ANY.RUN Sandbox by reviewing our **[API documentation](https://any.run/api-documentation/)**.
 
@@ -159,10 +158,10 @@ The main setup and customization of the Logic App is available through the graph
 
 ### Simultaneous Analysis of Objects in ANY.RUN Sandbox
 
-ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple Files, each analysis will run sequentially (a new File analysis won't start until the previous one finishes, to avoid errors).
+ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple files, each analysis will run sequentially (a new file analysis won't start until the previous one is finished).
 
-- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, open the **For each - detonate files to ANY.RUN Sandbox** loop > **Settings** and increase the **Degree of parallelism** value. It is recommended to set a value that does not exceed the number of possible parallel analyses in ANY.RUN Sandbox for your pricing plan.
+- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, open `For each - detonate files to ANY.RUN Sandbox` loop > `Settings` and increase the `Degree of parallelism` value. Note that you should set a value that does not exceed the number of parallel analyses available at your pricing plan.
 
 ![parallel_analysis](images/003.png)
 
-> **Note**: To upgrade your pricing plan capabilities, [contact us](https://app.any.run/contact-us).
+> **Note**: To expand your capabilities by upgrading your pricing plan, [contact us](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktocontactus).

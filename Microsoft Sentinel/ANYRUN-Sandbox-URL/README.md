@@ -6,11 +6,11 @@
 
 ______________________________________________________________________
 
-# Microsoft Sentinel Connector for automated URL analysis via ANY.RUN Malware Sandbox
+# Microsoft Sentinel Connector for automated URL analysis via ANY.RUN's Malware Sandbox
 
 ## Overview
 
-This playbook extracts URL from incidents and submit it for analysis in the ANY.RUN Sandbox to enrich the incident with a verdict using a single Azure Logic App.
+This playbook extracts URLs from incidents and submits them for analysis in ANY.RUN Sandbox to enrich the incident with a verdict using a single Azure Logic App. 
 
 ## Requirements:
 - ANY.RUN API-Key
@@ -44,7 +44,7 @@ This playbook extracts URL from incidents and submit it for analysis in the ANY.
 
 ### ANY.RUN Sandbox analysis parameters
 
-ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using any environments. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required URL.
+ANY.RUN is an interactive online malware analysis service for dynamic and static research of most types of threats using a customizable VM environment. We offer a connector for Microsoft Sentinel, which you can independently adapt to your infrastructure and needs in just a few clicks. You can easily change the parameters used for analyzing the required URL.
 
 > **Note:** You can learn more about the capabilities of ANY.RUN Sandbox by reviewing our **[API documentation](https://any.run/api-documentation/)**.
 
@@ -75,9 +75,9 @@ The main setup and customization of the Logic App is available through the graph
 
 ### Simultaneous Analysis of Objects in ANY.RUN Sandbox
 
-ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple URLs, each analysis will run sequentially (a new URL analysis won't start until the previous one finishes, to avoid errors).
+ANY.RUN Sandbox allows users to perform multiple analyses simultaneously (availability and capability depend on your pricing plan). By default, if a Microsoft Sentinel incident contains multiple URLs, each analysis will run sequentially (a new URL analysis won't start until the previous one is finished).
 
-- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, open the **For each - URL** loop > **Settings** and increase the **Degree of parallelism** value. It is recommended to set a value that does not exceed the number of possible parallel analyses in ANY.RUN Sandbox for your pricing plan.
+- To increase the speed of incident enrichment, you can analyze objects simultaneously. To do this, go to `For each - URL` loop > `Settings` and increase the `Degree of parallelism` value. Note that you should set a value that does not exceed the number of parallel analyses available at your pricing plan. 
 
 ![parallel_analysis](images/003.png)
 

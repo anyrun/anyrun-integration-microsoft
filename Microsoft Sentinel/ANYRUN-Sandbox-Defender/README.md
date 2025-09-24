@@ -27,21 +27,6 @@ After the analysis is completed in ANY.RUN Sandbox, its key results (verdict, sc
 
 ## Deployment
 
-### Deploy Azure Function App
-
-- Click below to deploy Azure Function App with **Flex Consumption plan**
- 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
-
-- Enter the parameters required for deploying the Function App and click **Review + create**.
-
-![function_app_deployment]()
-
-- Description of the required parameters:
-
-| Parameter Name               | Description                                                                 |
-|------------------------------|-----------------------------------------------------------------------------|
-
 ### Deploy Azure Logic App template
 
 - Click below to deploy Azure Logic App with **Flex Consumption plan**

@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 > **Note:** If you are using the Microsoft Sentinel & Microsoft Defender for Endpoint bundle in your infrastructure, we strongly recommend using the **[corresponding connector](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)** for this case.
 
-This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to ANY.RUN Sandbox using an Azure Logic App.
+This playbook allows you to send files from incidents for analysis in the ANY.RUN Sandbox. It uploads the file from the endpoint to Azure Blob Storage and then forwards it to ANY.RUN Sandbox using Azure Logic App and Azure Function App.
 
 Templates are provided for endpoints running the following operating systems:
 - Windows
@@ -22,6 +22,7 @@ Templates are provided for endpoints running the following operating systems:
 - ANY.RUN API-Key
 - Microsoft Sentinel
 - Azure Logic App (Flex Consumption plan)
+- Azure Function App (Flex Consumption plan)
 - Azure Blob Storage
 - Microsoft Defender for Endpoint (**Optional**)
 
@@ -50,7 +51,22 @@ This Logic App is a child workflow invoked by the parent to handle file upload f
 
 ## Deployment
 
-### Import Azure Logic App template
+### Deploy Azure Function App
+
+- Click below to deploy Azure Function App with **Flex Consumption plan**
+ 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
+
+- Enter the parameters required for deploying the Function App and click **Review + create**.
+
+![function_app_deployment]()
+
+- Description of the required parameters:
+
+| Parameter Name               | Description                                                                 |
+|------------------------------|-----------------------------------------------------------------------------|
+
+### Deploy Azure Logic App template
 
 #### Child Logic App
 

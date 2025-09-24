@@ -231,7 +231,7 @@ Since the connectors use various resources available in Azure, the created appli
 
 ### Deployment
 
-- After completing the preliminary settings above, you can proceed to deploy Azure Logic Apps required for integrating Microsoft Sentinel and ANY.RUN Sandbox: 
+- After completing the preliminary settings above, you can proceed to deploy resources required for integrating Microsoft Sentinel and ANY.RUN Sandbox: 
   - [ANYRUN-Sandbox-URL](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
   - [ANYRUN-Sandbox-File](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
   - [ANYRUN-Sandbox-Defender](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)

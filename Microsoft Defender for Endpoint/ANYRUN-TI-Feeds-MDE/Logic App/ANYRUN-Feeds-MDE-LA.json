@@ -1,0 +1,122 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "logicAppName": {
+            "defaultValue": "ANYRUN-Feeds-MDE-LA",
+            "type": "String"
+        },
+        "intervalRecurrence": {
+            "defaultValue": 2,
+            "type": "int",
+            "metadata": {
+                "description": "Interval of recurrence for the Logic App (in hours)"
+            }
+        },
+        "feedFetchDepth": {
+            "defaultValue": 30,
+            "type": "int",
+            "metadata": {
+                "description": "Depth of the feed to fetch (in days)"
+            }
+        },
+        "functionAppName": {
+            "defaultValue": "ANYRUN-Feeds-MDE-FA",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the Function App to call"
+            }
+        }
+    },
+    "variables": {
+        "connectFunctionAppName": "[toLower(parameters('functionAppName'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('logicAppName')]",
+            "location": "eastus",
+            "tags": {
+                "Resource": "Microsoft Defender XDR",
+                "PlaybookTrigger": "Incident",
+                "Custom": "ANYRUN",
+                "PlaybookType": "Enrichment"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "Feed Fetch Depth": {
+                            "defaultValue": "[parameters('feedFetchDepth')]",
+                            "type": "int"
+                        },
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Recurrence": {
+                            "recurrence": {
+                                "interval": "[parameters('intervalRecurrence')]",
+                                "frequency": "Hour",
+                                "timeZone": "Eastern Standard Time",
+                                "startTime": "2025-12-08T16:30:00Z"
+                            },
+                            "evaluatedRecurrence": {
+                                "interval": "[parameters('intervalRecurrence')]",
+                                "frequency": "Hour",
+                                "timeZone": "Eastern Standard Time",
+                                "startTime": "2025-12-08T16:30:00Z"
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Initialize_variables": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "feed_fetch_depth",
+                                        "type": "integer",
+                                        "value": "[parameters('feedFetchDepth')]"
+                                    }
+                                ]
+                            }
+                        },
+                        "ANYRUNFeeds-AnyRunFeeds": {
+                            "runAfter": {
+                                "Initialize_variables": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Function",
+                            "inputs": {
+                                "body": {
+                                    "feed_fetch_depth": "@variables('feed_fetch_depth')"
+                                },
+                                "function": {
+                                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', variables('connectFunctionAppName'), '/functions/ANYRUN-TI-Feeds-MDE')]"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {}
+                    }
+                }
+            }
+        }
+    ]
+}

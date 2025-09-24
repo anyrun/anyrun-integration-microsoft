@@ -160,7 +160,7 @@
             },
             {
               "name": "ANYRUN_Basic_auth_token",
-              "value": "[parameters('anyrunBasicToken')]"
+              "value": "[concat('Basic ', parameters('anyrunBasicToken'))]"
             },
             {
               "name": "AzureClientID",

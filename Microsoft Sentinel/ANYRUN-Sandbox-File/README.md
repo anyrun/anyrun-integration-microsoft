@@ -51,21 +51,6 @@ This Logic App is a child workflow invoked by the parent to handle file upload f
 
 ## Deployment
 
-### Deploy Azure Function App
-
-- Click below to deploy Azure Function App with **Flex Consumption plan**
- 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
-
-- Enter the parameters required for deploying the Function App and click **Review + create**.
-
-![function_app_deployment]()
-
-- Description of the required parameters:
-
-| Parameter Name               | Description                                                                 |
-|------------------------------|-----------------------------------------------------------------------------|
-
 ### Deploy Azure Logic App template
 
 #### Child Logic App

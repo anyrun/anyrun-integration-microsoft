@@ -171,7 +171,7 @@
           "appSettings": [
             {
               "name": "ANYRUN_API_KEY",
-              "value": "[parameters('ANYRUN_API_KEY')]"
+              "value": "[concat('API-KEY ', parameters('ANYRUN_API_KEY'))]"
             },
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",

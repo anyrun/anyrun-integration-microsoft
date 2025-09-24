@@ -225,6 +225,10 @@ Since the connectors use various resources available in Azure, the created appli
 
 ![sa_container_create](images/017.png)
 
+- Go to **Security + networking** > **Access keys**, copy and save **Key** and **Connection string**. These values are required for deploying the connector later.
+
+![sa_key](images/043.png)
+
 ### Deployment
 
 - After completing the preliminary settings above, you can proceed to deploy Azure Logic Apps required for integrating Microsoft Sentinel and ANY.RUN Sandbox: 

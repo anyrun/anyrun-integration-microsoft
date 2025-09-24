@@ -341,8 +341,12 @@
                                                         },
                                                         "function": {
                                                             "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', variables('connectFunctionAppName'), '/functions/ANYRUN-Sandbox-MDE-FA')]"
+                                                        },
+                                                        "retryPolicy": {
+                                                            "type": "none"
                                                         }
-                                                    }
+                                                    },
+                                                    "operationOptions": "DisableAsyncPattern"
                                                 }
                                             },
                                             "else": {
@@ -378,8 +382,12 @@
                                                                     },
                                                                     "function": {
                                                                         "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', variables('connectFunctionAppName'), '/functions/ANYRUN-Sandbox-MDE-FA')]"
+                                                                    },
+                                                                    "retryPolicy": {
+                                                                        "type": "none"
                                                                     }
-                                                                }
+                                                                },
+                                                                "operationOptions": "DisableAsyncPattern"
                                                             }
                                                         },
                                                         "else": {

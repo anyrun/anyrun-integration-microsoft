@@ -229,9 +229,32 @@ Since the connectors use various resources available in Azure, the created appli
 
 ![sa_key](images/043.png)
 
-### Deployment
+## Deployment
 
-- After completing the preliminary settings above, you can proceed to deploy resources required for integrating Microsoft Sentinel and ANY.RUN Sandbox: 
+### Deploy Azure Function App
+
+  > **Note:** This section is only required for workflows with file analysis (e.g. ANYRUN-Sandbox-File, ANYRUN-Sandbox-Defender).
+
+- Click below to deploy Azure Function App with **Flex Consumption plan**
+ 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FFunction%2520App%2FANYRUN-Sentinel-FA.json)
+
+- Enter the parameters required for deploying the Function App and click **Review + create**.
+
+![function_app_deployment](images/071.png)
+
+- Description of the required parameters:
+
+| Parameter Name               | Description                                                                 |
+|------------------------------|-----------------------------------------------------------------------------|
+| functionAppName              | Workflow name.                                                              |
+| AzureStorageAccountName      | Azure Blob Storage Account Name.                                            |
+| AzureStorageConnectionString | Azure Blob Storage Account Connection string.                               |
+| LogAnalyticsWorkspaceName    | Log Analytics Workspace Name.                                               |
+
+### Deploy Azure Logic Apps App
+
+- After completing the preliminary settings above, you can proceed to deploy the Azure Logic Apps necessary for integrating Microsoft Sentinel and ANY.RUN Sandbox:
   - [ANYRUN-Sandbox-URL](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-URL)
   - [ANYRUN-Sandbox-File](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-File)
   - [ANYRUN-Sandbox-Defender](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Sentinel/ANYRUN-Sandbox-Defender)

@@ -35,7 +35,7 @@ After the analysis is completed in ANY.RUN Sandbox, its key results (verdict, sc
 
 - Enter the parameters required for deploying the Logic App.
 
-![logic_app_deployment](images/001.png)
+![logic_app_deployment](images/011.png)
 
 - Description of the required parameters:
 

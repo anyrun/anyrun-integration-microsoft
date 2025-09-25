@@ -738,809 +738,558 @@
                                                         "schema": {
                                                             "type": "object",
                                                             "properties": {
-                                                                "analysis": {
+                                                                "error": {
+                                                                    "type": "boolean"
+                                                                },
+                                                                "data": {
                                                                     "type": "object",
                                                                     "properties": {
-                                                                        "uuid": {
-                                                                            "type": "string"
-                                                                        },
-                                                                        "permanentUrl": {
-                                                                            "type": "string"
-                                                                        },
-                                                                        "reports": {
+                                                                        "analysis": {
                                                                             "type": "object",
                                                                             "properties": {
-                                                                                "IOC": {
+                                                                                "uuid": {
                                                                                     "type": "string"
                                                                                 },
-                                                                                "MISP": {
+                                                                                "permanentUrl": {
                                                                                     "type": "string"
                                                                                 },
-                                                                                "HTML": {
-                                                                                    "type": "string"
+                                                                                "reports": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "IOC": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "MISP": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "HTML": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "STIX": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "graph": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    }
                                                                                 },
-                                                                                "STIX": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "graph": {
-                                                                                    "type": "string"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "sandbox": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "name": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "plan": {
+                                                                                "sandbox": {
                                                                                     "type": "object",
                                                                                     "properties": {
                                                                                         "name": {
                                                                                             "type": "string"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "duration": {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        "creation": {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        "creationText": {
-                                                                            "type": "string"
-                                                                        },
-                                                                        "stopExec": {
-                                                                            "type": "integer"
-                                                                        },
-                                                                        "stopExecText": {
-                                                                            "type": "string"
-                                                                        },
-                                                                        "tags": {
-                                                                            "type": "array"
-                                                                        },
-                                                                        "options": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "timeout": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "additionalTime": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "fakeNet": {
-                                                                                    "type": "boolean"
-                                                                                },
-                                                                                "heavyEvasion": {
-                                                                                    "type": "boolean"
-                                                                                },
-                                                                                "mitm": {
-                                                                                    "type": "boolean"
-                                                                                },
-                                                                                "tor": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "used": {
-                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "plan": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "name": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 },
-                                                                                "presentation": {
-                                                                                    "type": "boolean"
+                                                                                "duration": {
+                                                                                    "type": "integer"
                                                                                 },
-                                                                                "video": {
-                                                                                    "type": "boolean"
+                                                                                "creation": {
+                                                                                    "type": "integer"
                                                                                 },
-                                                                                "hideSource": {
-                                                                                    "type": "boolean"
-                                                                                },
-                                                                                "network": {
-                                                                                    "type": "boolean"
-                                                                                },
-                                                                                "privacy": {
+                                                                                "creationText": {
                                                                                     "type": "string"
                                                                                 },
-                                                                                "privateSample": {
-                                                                                    "type": "boolean"
+                                                                                "stopExec": {
+                                                                                    "type": "integer"
                                                                                 },
-                                                                                "automatization": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "interactivity": {
-                                                                                            "type": "boolean"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "scores": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "verdict": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "score": {
-                                                                                            "type": "integer"
-                                                                                        },
-                                                                                        "threatLevel": {
-                                                                                            "type": "integer"
-                                                                                        },
-                                                                                        "threatLevelText": {
-                                                                                            "type": "string"
-                                                                                        }
-                                                                                    }
+                                                                                "stopExecText": {
+                                                                                    "type": "string"
                                                                                 },
-                                                                                "specs": {
-                                                                                    "type": "object",
-                                                                                    "properties": {}
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "content": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "mainObject": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "type": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "permanentUrl": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "filename": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "basename": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "info": {
-                                                                                            "type": "object",
-                                                                                            "properties": {
-                                                                                                "ext": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "file": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "mime": {
-                                                                                                    "type": "string"
-                                                                                                }
-                                                                                            }
-                                                                                        },
-                                                                                        "hashes": {
-                                                                                            "type": "object",
-                                                                                            "properties": {
-                                                                                                "md5": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "sha1": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "sha256": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "ssdeep": {
-                                                                                                    "type": "string"
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "video": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "present": {
-                                                                                            "type": "boolean"
-                                                                                        },
-                                                                                        "permanentUrl": {
-                                                                                            "type": "string"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "pcap": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "present": {
-                                                                                            "type": "boolean"
-                                                                                        },
-                                                                                        "permanentUrl": {
-                                                                                            "type": "string"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "sslkeys": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "present": {
-                                                                                            "type": "boolean"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "screenshots": {
+                                                                                "tags": {
                                                                                     "type": "array",
                                                                                     "items": {
                                                                                         "type": "object",
                                                                                         "properties": {
-                                                                                            "uuid": {
-                                                                                                "type": "string"
+                                                                                            "users": {
+                                                                                                "type": "boolean"
                                                                                             },
-                                                                                            "time": {
-                                                                                                "type": "integer"
-                                                                                            },
-                                                                                            "permanentUrl": {
-                                                                                                "type": "string"
-                                                                                            },
-                                                                                            "thumbnailUrl": {
+                                                                                            "tag": {
                                                                                                 "type": "string"
                                                                                             }
                                                                                         },
                                                                                         "required": [
-                                                                                            "uuid",
-                                                                                            "time",
-                                                                                            "permanentUrl",
-                                                                                            "thumbnailUrl"
+                                                                                            "users",
+                                                                                            "tag"
                                                                                         ]
                                                                                     }
                                                                                 },
-                                                                                "dumps": {
-                                                                                    "type": "array"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "environments": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "os": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "title": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "build": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "product": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "variant": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "productType": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "major": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "softSet": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "bitness": {
-                                                                                    "type": "integer"
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "counters": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "processes": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "total": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "monitored": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "suspicious": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "malicious": {
-                                                                                    "type": "integer"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "network": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "http": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "connections": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "dns": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "threats": {
-                                                                                    "type": "integer"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "files": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "unknown": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "text": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "suspicious": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "malicious": {
-                                                                                    "type": "integer"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "synchronization": {
-                                                                            "type": "object",
-                                                                            "properties": {
-                                                                                "total": {
-                                                                                    "type": "integer"
-                                                                                },
-                                                                                "operation": {
+                                                                                "options": {
                                                                                     "type": "object",
                                                                                     "properties": {
-                                                                                        "open": {
+                                                                                        "timeout": {
                                                                                             "type": "integer"
                                                                                         },
-                                                                                        "create": {
-                                                                                            "type": "integer"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "type": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "mutex": {
+                                                                                        "additionalTime": {
                                                                                             "type": "integer"
                                                                                         },
-                                                                                        "event": {
-                                                                                            "type": "integer"
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "processes": {
-                                                                    "type": "array",
-                                                                    "items": {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "pid": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "important": {
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "uuid": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "image": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "commandLine": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "fileName": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "fileType": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "mainProcess": {
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "times": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "start": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "terminate": {
-                                                                                        "type": "integer"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "versionInfo": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "company": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "description": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "version": {
-                                                                                        "type": "string"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "context": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "rebootNumber": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "integrityLevel": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "userName": {
-                                                                                        "type": "string"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "scores": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "verdict": {
-                                                                                        "type": "object",
-                                                                                        "properties": {
-                                                                                            "score": {
-                                                                                                "type": "integer"
-                                                                                            },
-                                                                                            "threatLevel": {
-                                                                                                "type": "integer"
-                                                                                            },
-                                                                                            "threatLevelText": {
-                                                                                                "type": "string"
+                                                                                        "fakeNet": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "heavyEvasion": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "mitm": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "tor": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "used": {
+                                                                                                    "type": "boolean"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "presentation": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "video": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "hideSource": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "network": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "privacy": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "privateSample": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "automatization": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "uac": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "interactivity": {
+                                                                                                    "type": "boolean"
+                                                                                                }
                                                                                             }
                                                                                         }
-                                                                                    },
-                                                                                    "dropped": {
-                                                                                        "type": "boolean"
-                                                                                    },
-                                                                                    "injected": {
-                                                                                        "type": "boolean"
-                                                                                    },
-                                                                                    "loadsSusp": {
-                                                                                        "type": "boolean"
+                                                                                    }
+                                                                                },
+                                                                                "scores": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "verdict": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "score": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "threatLevel": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "threatLevelText": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "specs": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "autoStart": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "debugOutput": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "executableDropped": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "multiprocessing": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "serviceLauncher": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "stealing": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "privEscalation": {
+                                                                                                    "type": "boolean"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "content": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "mainObject": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "type": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "permanentUrl": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "filename": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "basename": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "info": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                        "ext": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "file": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "mime": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "trid": {
+                                                                                                            "type": "array",
+                                                                                                            "items": {
+                                                                                                                "type": "object",
+                                                                                                                "properties": {
+                                                                                                                    "procent": {
+                                                                                                                        "type": "integer"
+                                                                                                                    },
+                                                                                                                    "extension": {
+                                                                                                                        "type": "string"
+                                                                                                                    },
+                                                                                                                    "filetype": {
+                                                                                                                        "type": "string"
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "required": [
+                                                                                                                    "procent",
+                                                                                                                    "extension",
+                                                                                                                    "filetype"
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "hashes": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                        "md5": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "sha1": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "sha256": {
+                                                                                                            "type": "string"
+                                                                                                        },
+                                                                                                        "ssdeep": {
+                                                                                                            "type": "string"
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "video": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "present": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "permanentUrl": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "pcap": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "present": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "permanentUrl": {
+                                                                                                    "type": "string"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "sslkeys": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "present": {
+                                                                                                    "type": "boolean"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "screenshots": {
+                                                                                            "type": "array",
+                                                                                            "items": {
+                                                                                                "type": "object",
+                                                                                                "properties": {
+                                                                                                    "uuid": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "time": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "permanentUrl": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "thumbnailUrl": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "required": [
+                                                                                                    "uuid",
+                                                                                                    "time",
+                                                                                                    "permanentUrl",
+                                                                                                    "thumbnailUrl"
+                                                                                                ]
+                                                                                            }
+                                                                                        },
+                                                                                        "dumps": {
+                                                                                            "type": "array",
+                                                                                            "items": {
+                                                                                                "type": "object",
+                                                                                                "properties": {
+                                                                                                    "address": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "size": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "pid": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "processName": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "timestamp": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "permanentUrl": {
+                                                                                                        "type": "string"
+                                                                                                    },
+                                                                                                    "fileNumber": {
+                                                                                                        "type": "integer"
+                                                                                                    },
+                                                                                                    "taskUUID": {
+                                                                                                        "type": "string"
+                                                                                                    }
+                                                                                                },
+                                                                                                "required": [
+                                                                                                    "address",
+                                                                                                    "size",
+                                                                                                    "pid",
+                                                                                                    "processName",
+                                                                                                    "timestamp",
+                                                                                                    "permanentUrl",
+                                                                                                    "fileNumber",
+                                                                                                    "taskUUID"
+                                                                                                ]
+                                                                                            }
+                                                                                        }
                                                                                     }
                                                                                 }
-                                                                            },
-                                                                            "status": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "exitCode": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "hasMalwareConfig": {
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "modules": {
-                                                                                "type": "array"
-                                                                            },
-                                                                            "synchronization": {
-                                                                                "type": "array"
-                                                                            },
-                                                                            "ppid": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "parentUUID": {
-                                                                                "type": "string"
                                                                             }
                                                                         },
-                                                                        "required": [
-                                                                            "pid",
-                                                                            "important",
-                                                                            "uuid",
-                                                                            "image",
-                                                                            "commandLine",
-                                                                            "fileName",
-                                                                            "fileType",
-                                                                            "mainProcess",
-                                                                            "times",
-                                                                            "versionInfo",
-                                                                            "context",
-                                                                            "scores",
-                                                                            "status",
-                                                                            "exitCode",
-                                                                            "hasMalwareConfig",
-                                                                            "modules",
-                                                                            "synchronization"
-                                                                        ]
-                                                                    }
-                                                                },
-                                                                "malconf": {
-                                                                    "type": "array"
-                                                                },
-                                                                "network": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "dnsRequests": {
-                                                                            "type": "array",
-                                                                            "items": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "time": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "domain": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "ips": {
-                                                                                        "type": "array",
-                                                                                        "items": {
+                                                                        "environments": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "os": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "title": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "build": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "product": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "variant": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "productType": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "major": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "servicePack": {},
+                                                                                        "softSet": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "bitness": {
+                                                                                            "type": "integer"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "internetExplorer": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "version": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "kbnum": {
                                                                                             "type": "string"
                                                                                         }
-                                                                                    },
-                                                                                    "reputation": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "reputationNumber": {
-                                                                                        "type": "integer"
                                                                                     }
                                                                                 },
-                                                                                "required": [
-                                                                                    "time",
-                                                                                    "domain",
-                                                                                    "ips",
-                                                                                    "reputation"
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "httpRequests": {
-                                                                            "type": "array",
-                                                                            "items": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "time": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "method": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "host": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "url": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "ip": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "port": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "proxyDetected": {
-                                                                                        "type": "boolean"
-                                                                                    },
-                                                                                    "status": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "httpCode": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "reputation": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "country": {
-                                                                                        "type": "string"
-                                                                                    }
-                                                                                },
-                                                                                "required": [
-                                                                                    "time",
-                                                                                    "method",
-                                                                                    "host",
-                                                                                    "url",
-                                                                                    "ip",
-                                                                                    "port",
-                                                                                    "proxyDetected",
-                                                                                    "status",
-                                                                                    "httpCode",
-                                                                                    "reputation",
-                                                                                    "country"
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "connections": {
-                                                                            "type": "array",
-                                                                            "items": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "ip": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "port": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "protocol": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "country": {},
-                                                                                    "asn": {},
-                                                                                    "time": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "process": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "reputation": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "tlsFingerprint": {
+                                                                                "software": {
+                                                                                    "type": "array",
+                                                                                    "items": {
                                                                                         "type": "object",
                                                                                         "properties": {
-                                                                                            "ja3": {
+                                                                                            "title": {
                                                                                                 "type": "string"
                                                                                             },
-                                                                                            "ja3Fullstring": {
-                                                                                                "type": "string"
-                                                                                            },
-                                                                                            "ja3S": {
-                                                                                                "type": "string"
-                                                                                            },
-                                                                                            "ja3SFullstring": {
+                                                                                            "version": {
                                                                                                 "type": "string"
                                                                                             }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "title",
+                                                                                            "version"
+                                                                                        ]
+                                                                                    }
+                                                                                },
+                                                                                "hotfixes": {
+                                                                                    "type": "array",
+                                                                                    "items": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                            "title": {
+                                                                                                "type": "string"
+                                                                                            }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "title"
+                                                                                        ]
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "counters": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "processes": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "total": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "monitored": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "suspicious": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "malicious": {
+                                                                                            "type": "integer"
                                                                                         }
                                                                                     }
                                                                                 },
-                                                                                "required": [
-                                                                                    "ip",
-                                                                                    "port",
-                                                                                    "protocol",
-                                                                                    "country",
-                                                                                    "asn",
-                                                                                    "time",
-                                                                                    "reputation"
-                                                                                ]
+                                                                                "network": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "http": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "connections": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "dns": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "threats": {
+                                                                                            "type": "integer"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "files": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "unknown": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "text": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "suspicious": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "malicious": {
+                                                                                            "type": "integer"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "registry": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "total": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "read": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "write": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "delete": {
+                                                                                            "type": "integer"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "synchronization": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "total": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "operation": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "open": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "create": {
+                                                                                                    "type": "integer"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "type": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "mutex": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "event": {
+                                                                                                    "type": "integer"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         },
-                                                                        "threats": {
+                                                                        "malconf": {
                                                                             "type": "array"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "modified": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "files": {
-                                                                            "type": "array",
-                                                                            "items": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "time": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "filename": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "size": {
-                                                                                        "type": "integer"
-                                                                                    },
-                                                                                    "process": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "type": {
-                                                                                        "type": "string"
-                                                                                    },
-                                                                                    "threatLevel": {
-                                                                                        "type": "string"
-                                                                                    }
-                                                                                },
-                                                                                "required": [
-                                                                                    "time",
-                                                                                    "filename",
-                                                                                    "size",
-                                                                                    "process",
-                                                                                    "type",
-                                                                                    "threatLevel"
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "incidents": {
-                                                                    "type": "array",
-                                                                    "items": {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "threatLevel": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "title": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "desc": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "source": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "firstSeen": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "count": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "mitre": {
-                                                                                "type": "array",
-                                                                                "items": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "tid": {
-                                                                                            "type": "integer"
-                                                                                        },
-                                                                                        "sid": {
-                                                                                            "type": "integer"
-                                                                                        },
-                                                                                        "v": {}
-                                                                                    },
-                                                                                    "required": [
-                                                                                        "tid",
-                                                                                        "sid",
-                                                                                        "v"
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            "events": {
-                                                                                "type": "array",
-                                                                                "items": {
-                                                                                    "type": "object",
-                                                                                    "properties": {
-                                                                                        "_id": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "oldImage": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "image": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "oldCmdline": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "cmdline": {
-                                                                                            "type": "string"
-                                                                                        },
-                                                                                        "time": {
-                                                                                            "type": "string"
-                                                                                        }
-                                                                                    },
-                                                                                    "required": [
-                                                                                        "_id",
-                                                                                        "oldImage",
-                                                                                        "image",
-                                                                                        "oldCmdline",
-                                                                                        "cmdline",
-                                                                                        "time"
-                                                                                    ]
-                                                                                }
-                                                                            },
-                                                                            "process": {
-                                                                                "type": "string"
-                                                                            }
                                                                         },
-                                                                        "required": [
-                                                                            "threatLevel",
-                                                                            "title",
-                                                                            "desc",
-                                                                            "source",
-                                                                            "firstSeen",
-                                                                            "count",
-                                                                            "mitre",
-                                                                            "events",
-                                                                            "process"
-                                                                        ]
+                                                                        "mitre": {
+                                                                            "type": "array"
+                                                                        },
+                                                                        "status": {
+                                                                            "type": "string"
+                                                                        }
                                                                     }
-                                                                },
-                                                                "debugStrings": {
-                                                                    "type": "array"
-                                                                },
-                                                                "mitre": {
-                                                                    "type": "array",
-                                                                    "items": {}
                                                                 }
                                                             }
                                                         }

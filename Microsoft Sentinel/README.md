@@ -237,7 +237,7 @@ Since the connectors use various resources available in Azure, the created appli
 
 - Click below to deploy Azure Function App with **Flex Consumption plan**
  
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frollehfoh%2FANY.RUN%2Fmain%2Fconnectors%2FMicrosoft%2FMicrosoft%2520Sentinel%2FFunction%2520App%2FANYRUN-Sentinel-FA.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fanyrun%2Fanyrun-integration-microsoft%2Fmain%2FMicrosoft%2520Sentinel%2FFunction%2520App%2FANYRUN-Sentinel-FA.json)
 
 - Enter the parameters required for deploying the Function App and click **Review + create**.
 

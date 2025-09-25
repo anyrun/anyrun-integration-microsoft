@@ -2079,7 +2079,7 @@
                                             "type": "Function",
                                             "inputs": {
                                                 "body": {
-                                                    "filename": "@variables('Suspicious File - FileName')",
+                                                    "filename": "@item()['fileName']",
                                                     "blob_container_name": "@variables('Container Name')",
                                                     "azure_conn_string": "@variables('Azure Storage Connection String')",
                                                     "token": "API-Key @{body('Get_secret_-_ANYRUN')?['value']}",

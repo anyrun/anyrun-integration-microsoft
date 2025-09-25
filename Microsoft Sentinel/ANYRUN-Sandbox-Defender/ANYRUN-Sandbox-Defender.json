@@ -1335,7 +1335,7 @@
                                                                                                                                     "type": "object",
                                                                                                                                     "properties": {
                                                                                                                                         "procent": {
-                                                                                                                                            "type": "integer"
+                                                                                                                                            "type": "number"
                                                                                                                                         },
                                                                                                                                         "extension": {
                                                                                                                                             "type": "string"
@@ -3317,7 +3317,7 @@
                                                                                                         "type": "object",
                                                                                                         "properties": {
                                                                                                             "procent": {
-                                                                                                                "type": "integer"
+                                                                                                                "type": "number"
                                                                                                             },
                                                                                                             "extension": {
                                                                                                                 "type": "string"

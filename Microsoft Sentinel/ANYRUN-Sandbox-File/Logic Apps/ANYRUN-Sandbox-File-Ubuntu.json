@@ -42,6 +42,12 @@
                 "description": "Azure Blob Storage Account Name."
             }
         },
+        "azureBlobStorageConnectionString": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Azure Blob Storage Connection String."
+            }
+        },        
         "azureBlobStorageContainerName": {
             "type": "string",
             "metadata": {
@@ -54,9 +60,17 @@
             "metadata": {
                 "description": "Name of the child Logic App."
             }
+        },
+        "functionAppName": {
+            "defaultValue": "ANYRUN-Sentinel-FA",
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Function App to call."
+            }
         }
     },
     "variables": {
+        "connectFunctionAppName": "[toLower(parameters('functionAppName'))]",
         "azuresentinelConnectionName": "azuresentinel--anyrun-app",
         "azureblobConnectionName": "azureblob--anyrun-app",
         "keyVaultConnectionName": "keyvault--anyrun-app",
@@ -254,7 +268,7 @@
                         },
                         "Filter_array_-_File": {
                             "runAfter": {
-                                "Initialize_Additional_Service_Parameters": [
+                                "ANY.RUN_Ubuntu_analysis_options": [
                                     "Succeeded"
                                 ]
                             },
@@ -381,6 +395,11 @@
                                         "name": "Child Logic App Name",
                                         "type": "string",
                                         "value": "@{parameters('Child Logic App')}"
+                                    },
+                                    {
+                                        "name": "Azure Storage Connection String",
+                                        "type": "string",
+                                        "value": "[parameters('azureBlobStorageConnectionString')]"
                                     }
                                 ]
                             }
@@ -512,28 +531,43 @@
                                                 }
                                             }
                                         },
-                                        "Parse_JSON_-_Get_TaskId": {
+                                        "Parse_JSON_-_Get_TaskId_Ubuntu": {
                                             "runAfter": {
-                                                "HTTP_-_Submit_File_to_ANY.RUN_Sandbox_Ubuntu": [
+                                                "ANYRUN-Sentinel-FA_Ubuntu_File_Analysis": [
                                                     "Succeeded"
                                                 ]
                                             },
                                             "type": "ParseJson",
                                             "inputs": {
-                                                "content": "@body('HTTP_-_Submit_File_to_ANY.RUN_Sandbox_Ubuntu')",
+                                                "content": "@outputs('ANYRUN-Sentinel-FA_Ubuntu_File_Analysis')",
                                                 "schema": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "error": {
-                                                            "type": "boolean"
+                                                        "statusCode": {
+                                                            "type": "integer"
                                                         },
-                                                        "data": {
+                                                        "headers": {
                                                             "type": "object",
                                                             "properties": {
-                                                                "taskid": {
+                                                                "Date": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Server": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Transfer-Encoding": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Content-Type": {
+                                                                    "type": "string"
+                                                                },
+                                                                "Content-Length": {
                                                                     "type": "string"
                                                                 }
                                                             }
+                                                        },
+                                                        "body": {
+                                                            "type": "string"
                                                         }
                                                     }
                                                 }
@@ -541,94 +575,14 @@
                                         },
                                         "UUID_-_Save_Task_ID": {
                                             "runAfter": {
-                                                "Parse_JSON_-_Get_TaskId": [
+                                                "Parse_JSON_-_Get_TaskId_Ubuntu": [
                                                     "Succeeded"
                                                 ]
                                             },
                                             "type": "SetVariable",
                                             "inputs": {
                                                 "name": "UUID",
-                                                "value": "@body('Parse_JSON_-_Get_TaskId')?['data']?['taskid']"
-                                            }
-                                        },
-                                        "HTTP_-_Submit_File_to_ANY.RUN_Sandbox_Ubuntu": {
-                                            "runAfter": {
-                                                "Get_blob_content_(V2)": [
-                                                    "Succeeded"
-                                                ]
-                                            },
-                                            "type": "Http",
-                                            "inputs": {
-                                                "uri": "https://api.any.run/v1/analysis",
-                                                "method": "POST",
-                                                "headers": {
-                                                    "Authorization": "API-Key @{body('Get_secret_-_ANYRUN')?['value']}",
-                                                    "Accept": "application/json"
-                                                },
-                                                "body": {
-                                                    "$content-type": "multipart/form-data",
-                                                    "$multipart": [
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"file\"; filename=\"@{item()['fileName']}\""
-                                                            },
-                                                            "body": "@{body('Get_blob_content_(V2)')}"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"env_os\""
-                                                            },
-                                                            "body": "linux"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"env_bitness\""
-                                                            },
-                                                            "body": "64"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"opt_timeout\""
-                                                            },
-                                                            "body": "240"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"opt_automated_interactivity\""
-                                                            },
-                                                            "body": "true"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"run_as_root\""
-                                                            },
-                                                            "body": "true"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"env_version\""
-                                                            },
-                                                            "body": "22.04.2"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"obj_ext_extension\""
-                                                            },
-                                                            "body": "false"
-                                                        },
-                                                        {
-                                                            "headers": {
-                                                                "Content-Disposition": "form-data; name=\"env_type\""
-                                                            },
-                                                            "body": "complete"
-                                                        }
-                                                    ]
-                                                }
-                                            },
-                                            "runtimeConfiguration": {
-                                                "contentTransfer": {
-                                                    "transferMode": "Chunked"
-                                                }
+                                                "value": "@json(body('Parse_JSON_-_Get_TaskId_Ubuntu')?['body'])['data']['taskid']"
                                             }
                                         },
                                         "Add_comment_to_incident_-_Analysis_Started": {
@@ -652,29 +606,9 @@
                                                 "path": "/Incidents/Comment"
                                             }
                                         },
-                                        "Delete_blob_(V2)": {
-                                            "runAfter": {
-                                                "Add_comment_to_incident_-_Analysis_Started": [
-                                                    "Succeeded"
-                                                ]
-                                            },
-                                            "type": "ApiConnection",
-                                            "inputs": {
-                                                "host": {
-                                                    "connection": {
-                                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
-                                                    }
-                                                },
-                                                "method": "delete",
-                                                "headers": {
-                                                    "SkipDeleteIfFileNotFoundOnServer": false
-                                                },
-                                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(variables('Storage Account Name')))}/files/@{encodeURIComponent(encodeURIComponent('/',variables('Container Name'),'/',item()['fileName']))}"
-                                            }
-                                        },
                                         "Delay_-_Wait_for_File_Analysis": {
                                             "runAfter": {
-                                                "Delete_blob_(V2)": [
+                                                "Add_comment_to_incident_-_Analysis_Started": [
                                                     "Succeeded"
                                                 ]
                                             },
@@ -2308,7 +2242,7 @@
                                                     "type": "Select",
                                                     "inputs": {
                                                         "from": "@outputs('Compose_Sorted_IOCs')",
-                                                        "select": "<tr><td>@{item()['ioc']}</td><td>@{item()['type']}</td><td>@{item()['severity']}</td></tr>"
+                                                        "select": "@{item()['ioc']}@{item()['type']}@{item()['severity']}"
                                                     }
                                                 },
                                                 "Compose_IOC_Table": {
@@ -2386,6 +2320,48 @@
                                                 ]
                                             },
                                             "type": "If"
+                                        },
+                                        "ANYRUN-Sentinel-FA_Ubuntu_File_Analysis": {
+                                            "runAfter": {
+                                                "Get_blob_content_(V2)": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "Function",
+                                            "inputs": {
+                                                "body": {
+                                                    "filename": "@variables('Suspicious File - FileName')",
+                                                    "blob_container_name": "@variables('Container Name')",
+                                                    "azure_conn_string": "@variables('Azure Storage Connection String')",
+                                                    "token": "API-Key @{body('Get_secret_-_ANYRUN')?['value']}",
+                                                    "environment": "linux",
+                                                    "analysis_options": {
+                                                        "opt_network_connect": "@variables('opt_network_connect')",
+                                                        "opt_network_fakenet": "@variables('opt_network_fakenet')",
+                                                        "opt_network_tor": "@variables('opt_network_tor')",
+                                                        "opt_network_geo": "@variables('opt_network_geo')",
+                                                        "opt_network_mitm": "@variables('opt_network_mitm')",
+                                                        "opt_network_residential_proxy": "@variables('opt_network_residential_proxy')",
+                                                        "opt_network_residential_proxy_geo": "@variables('opt_network_residential_proxy_geo')",
+                                                        "opt_privacy_type": "@variables('opt_privacy_type')",
+                                                        "opt_timeout": "@variables('opt_timeout')",
+                                                        "env_os": "ubuntu",
+                                                        "env_locale": "@variables('env_locale')",
+                                                        "user_tags": "@variables('user_tags')",
+                                                        "obj_ext_startfolder": "@variables('linux_obj_ext_startfolder')",
+                                                        "obj_ext_cmd": "@variables('linux_obj_ext_cmd')",
+                                                        "obj_ext_extension": "@variables('obj_ext_extension')",
+                                                        "run_as_root": "@variables('linux_run_as_root')"
+                                                    }
+                                                },
+                                                "function": {
+                                                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', variables('connectFunctionAppName'), '/functions/ANYRUN-Sentinel-FA')]"
+                                                },
+                                                "retryPolicy": {
+                                                    "type": "none"
+                                                }
+                                            },
+                                            "operationOptions": "DisableAsyncPattern"
                                         }
                                     },
                                     "runAfter": {
@@ -2545,6 +2521,109 @@
                                         "outputs"
                                     ]
                                 }
+                            }
+                        },
+                        "ANY.RUN_general_analysis_options": {
+                            "runAfter": {
+                                "Initialize_Additional_Service_Parameters": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "opt_timeout",
+                                        "type": "integer",
+                                        "value": 240
+                                    },
+                                    {
+                                        "name": "opt_network_connect",
+                                        "type": "boolean",
+                                        "value": true
+                                    },
+                                    {
+                                        "name": "opt_network_fakenet",
+                                        "type": "boolean",
+                                        "value": false
+                                    },
+                                    {
+                                        "name": "opt_network_tor",
+                                        "type": "boolean",
+                                        "value": false
+                                    },
+                                    {
+                                        "name": "opt_network_geo",
+                                        "type": "string",
+                                        "value": "fastest"
+                                    },
+                                    {
+                                        "name": "opt_network_mitm",
+                                        "type": "boolean",
+                                        "value": false
+                                    },
+                                    {
+                                        "name": "opt_network_residential_proxy",
+                                        "type": "boolean",
+                                        "value": false
+                                    },
+                                    {
+                                        "name": "opt_network_residential_proxy_geo",
+                                        "type": "string",
+                                        "value": "fastest"
+                                    },
+                                    {
+                                        "name": "opt_privacy_type",
+                                        "type": "string",
+                                        "value": "bylink"
+                                    },
+                                    {
+                                        "name": "obj_ext_extension",
+                                        "type": "boolean",
+                                        "value": true
+                                    },
+                                    {
+                                        "name": "env_locale",
+                                        "type": "string",
+                                        "value": "en-US"
+                                    },
+                                    {
+                                        "name": "user_tags",
+                                        "type": "string",
+                                        "value": "sentinel-inc"
+                                    }
+                                ]
+                            }
+                        },
+                        "ANY.RUN_Ubuntu_analysis_options": {
+                            "runAfter": {
+                                "ANY.RUN_general_analysis_options": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "linux_env_os",
+                                        "type": "string",
+                                        "value": "ubuntu"
+                                    },
+                                    {
+                                        "name": "linux_obj_ext_startfolder",
+                                        "type": "string",
+                                        "value": "temp"
+                                    },
+                                    {
+                                        "name": "linux_obj_ext_cmd",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "name": "linux_run_as_root",
+                                        "type": "boolean",
+                                        "value": true
+                                    }
+                                ]
                             }
                         }
                     },

@@ -89,21 +89,23 @@ First, you need to deploy the child Logic App, as its parameters are required fo
 
 - Enter the parameters required for deploying the Logic App and click **Review + create**.
 
-![parent_logic_app_deployment](images/005.png)
+![parent_logic_app_deployment](images/015.png)
 
 - Description of the required parameters:
 
-| Parameter Name              | Description                                                                 |
-|-----------------------------|-----------------------------------------------------------------------------|
-| logicAppName                | Workflow name.                                                              |
-| azureTenantId               | Azure Tenant ID for authentication in connections.                          |
-| azureClientId               | Client ID for authentication (ID of the App Registration created before).   |
-| azureClientSecret           | Client Secret for authentication.                                           |
-| keyVaultName                | Key Vault name.                                                             |
-| keyVaultUri                 | Key Vault URI (copy Vault URI from your Key Vault overview).                |
-| azureBlobStorageAccountName | Azure Blob Storage Account Name.                                            |
-| azureBlobStorageContainerName | Azure Blob Storage Container Name.                                        |
-| childWorkflowName           | Name of the child Logic App.                                                |
+| Parameter Name                   | Description                                                                 |
+|----------------------------------|-----------------------------------------------------------------------------|
+| logicAppName                     | Workflow name.                                                              |
+| azureTenantId                    | Azure Tenant ID for authentication.                                         |
+| azureClientId                    | Azure Client ID for authentication.                                         |
+| azureClientSecret                | Azure Client Secret for authentication.                                     |
+| keyVaultName                     | Key Vault name.                                                             |
+| keyVaultUri                      | Key Vault URI.                                                              |
+| azureBlobStorageAccountName      | Azure Blob Storage Account Name.                                            |
+| azureBlobStorageConnectionString | Azure Blob Storage Connection String.                                       |
+| azureBlobStorageContainerName    | Azure Blob Storage Container Name.                                          |
+| childWorkflowName                | Name of the child Logic App (deployed before).                              |
+| functionAppName                  | Name of the Function App to call (deployed before).                         |
 
 ## Storage Account Configuration
 
@@ -133,17 +135,25 @@ ANY.RUN is an interactive online malware analysis service for dynamic and static
 
 The main setup and customization of the Logic App is available through the graphical editor (**Development tools** > **Logic app designer**) or the code editor (**Development tools** > **Logic app code view**).
 
-- The File analysis parameters in ANY.RUN Sandbox are defined in the **HTTP - Submit File to ANY.RUN Sandbox Windows** action.
+- For File analysis - in the following three actions which are responsible for declaring the parameters:
 
-![analysis_action](images/001.png)
+  - `ANY.RUN general analysis options`
 
-- Analysis options are specified in the HTTP request body.
+  - `ANY.RUN Windows analysis options`
 
- > **Note:** HTTP request body consists of multipart/form-data
+  - `ANY.RUN Linux analysis options`
 
-![analysis_parameters](images/002.png)
+![analysis_parameters_file](images/018.png)
 
-- Description of the default parameters:
+- In the `ANY.RUN general analysis options` action, you can modify parameters that define general, OS-independent options such as analysis duration, virtual machine network settings, privacy, and more. For example, if you need to **increase the initial analysis time** for a more detailed examination of the object, select the **opt_timeout** variable and set the desired value in seconds, for example `360`.
+
+![general_parametrs_actions](images/019.png)
+
+- In the `ANY.RUN Windows analysis options` and `ANY.RUN Linux analysis options` actions, you can modify parameters that affect OS-specific virtual machine settings, such as the OS version and configuration, initial object location and launch parameters, and more. For example, if you need to run the analysis on a virtual machine with Windows 11 instead of Windows 10, click on the `ANY.RUN Windows analysis options` action, select the **windows_env_version** variable, and set the value to `11`.
+
+![os_parametrs_actions](images/020.png)
+
+- Description of the main parameters:
 
 | Parameter Name              | Description                                                                 |
 |-----------------------------|-----------------------------------------------------------------------------|

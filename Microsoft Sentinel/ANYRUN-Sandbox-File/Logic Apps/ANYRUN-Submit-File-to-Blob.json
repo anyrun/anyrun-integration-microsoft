@@ -621,7 +621,7 @@
                                                     }
                                                 },
                                                 "method": "post",
-                                                "body": "DeviceEvents\n| where ActionType == \"AntivirusDetection\"\n| where DeviceId == \"@{variables('Machine ID')}\"\n| where FileName == \"@{body('Parse_JSON_-_Extract_File_Name')?['properties']?['fileName']}\" and FileName !endswith \".lnk\"\n| project FolderPath, FileName\n| distinct FolderPath, FileName",
+                                                "body": "DeviceFileEvents\n| where ActionType == \"FileCreated\"\n| where DeviceId == \"@{variables('Machine ID')}\"\n| where FileName == \"@{body('Parse_JSON_-_Extract_File_Name')?['properties']?['fileName']}\" and FileName !endswith \".lnk\"\n| project FolderPath, FileName\n| distinct FolderPath, FileName",
                                                 "path": "/queryData",
                                                 "queries": {
                                                     "subscriptions": "@{variables('Subscription ID')}",
@@ -699,7 +699,7 @@
                                                     "type": "SetVariable",
                                                     "inputs": {
                                                         "name": "Suspicious File - FilePath",
-                                                        "value": "@concat(item()?['FolderPath'],'\\',item()?['FileName'])"
+                                                        "value": "@items('For_each_-_Set_paths')?['FolderPath']"
                                                     }
                                                 }
                                             },

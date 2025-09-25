@@ -636,7 +636,7 @@
                                                                         }
                                                                     },
                                                                     "method": "get",
-                                                                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/files/@{encodeURIComponent(encodeURIComponent('/',variables('Container Name'),'/',variables('Suspicious File - FileName')))}/content",
+                                                                    "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent(variables('Storage Account Name')))}/files/@{encodeURIComponent(encodeURIComponent('/',variables('Container Name'),'/',variables('Suspicious File - FileName')))}/content",
                                                                     "queries": {
                                                                         "inferContentType": true
                                                                     }

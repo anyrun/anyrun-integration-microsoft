@@ -241,7 +241,7 @@ Since the connectors use various resources available in Azure, the created appli
 
 - Enter the parameters required for deploying the Function App and click **Review + create**.
 
-![function_app_deployment](images/071.png)
+![function_app_deployment](images/081.png)
 
 - Description of the required parameters:
 

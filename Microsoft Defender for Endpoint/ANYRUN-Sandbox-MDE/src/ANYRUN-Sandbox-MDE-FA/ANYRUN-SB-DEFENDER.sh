@@ -7,29 +7,8 @@ containerName="$3"
 shift 3
 filePaths=("$@")
 
-# Redirect all output (stdout and stderr) to the log file
-exec > /home/user/Desktop/ANYRUN_FULLlog.txt 2>&1
-
 # Get current date for logging
 date=$(date +"%Y-%m-%d %H:%M:%S")
-
-# Output all input variables to console
-echo "Input parameters:"
-echo "filePath: ${filePaths[*]}"
-echo "SAStoken: $SAStoken"
-echo "storageAccountName: $storageAccountName"
-echo "containerName: $containerName"
-
-# Output all input variables to a log file (append mode with separator)
-logFilePath="/home/user/Desktop/ANYRUN_log.txt"  # Adjust path as needed for UNIX
-echo "---------------" >> "$logFilePath"
-echo "Input parameters at $date" >> "$logFilePath"
-echo "filePath: ${filePaths[*]}" >> "$logFilePath"
-echo "SAStoken: $SAStoken" >> "$logFilePath"
-echo "storageAccountName: $storageAccountName" >> "$logFilePath"
-echo "containerName: $containerName" >> "$logFilePath"
-echo "---------------" >> "$logFilePath"
-echo "Parameters logged to: $logFilePath"
 
 # Define temp folder
 tempFolder="/tmp/ANYRUN_Temp"
@@ -97,7 +76,7 @@ for path in "${filePaths[@]}"; do
     # Check if file exists at original path
     if [ -f "$path" ]; then
         # Move to temp folder if exists
-        mv -f "$path" "$tempFilePath"
+        cp -f "$path" "$tempFilePath"
         echo "File moved to temp folder: $tempFilePath"
     else
         # Try to restore from quarantine directly to temp folder

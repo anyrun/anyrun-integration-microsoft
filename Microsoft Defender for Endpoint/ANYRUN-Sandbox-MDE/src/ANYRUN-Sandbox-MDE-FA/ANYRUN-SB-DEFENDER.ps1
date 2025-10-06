@@ -8,24 +8,6 @@ param (
 # Get current date for logging
 $date = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 
-# Output all input variables to console
-Write-Host "Input parameters:"
-Write-Host "filePath: $($filePath -join ', ')"
-Write-Host "SAStoken: $SAStoken"
-Write-Host "storageAccountName: $storageAccountName"
-Write-Host "containerName: $containerName"
-
-# Output all input variables to a log file (append mode with separator)
-$logFilePath = "C:\Users\user\Desktop\ANYRUN_log.txt"
-"---------------" | Add-Content -Path $logFilePath
-"Input parameters at $date" | Add-Content -Path $logFilePath
-"filePath: $($filePath -join ', ')" | Add-Content -Path $logFilePath
-"SAStoken: $SAStoken" | Add-Content -Path $logFilePath
-"storageAccountName: $storageAccountName" | Add-Content -Path $logFilePath
-"containerName: $containerName" | Add-Content -Path $logFilePath
-"---------------" | Add-Content -Path $logFilePath
-Write-Host "Parameters logged to: $logFilePath"
-
 # Define temp folder
 $tempFolder = Join-Path -Path $env:TEMP -ChildPath "ANYRUN_Temp"
 
@@ -117,7 +99,7 @@ foreach ($path in $filePath) {
     # Check if file exists at original path
     if (Test-Path $path) {
         # Move to temp folder if exists
-        Move-Item -Path $path -Destination $tempFilePath -Force
+        Copy-Item -Path $path -Destination $tempFilePath -Force
         Write-Host "File moved to temp folder: $tempFilePath"
     } else {
         # Try to restore from quarantine directly to temp folder

@@ -6,7 +6,7 @@
 
 ______________________________________________________________________
 
-# Microsoft Sentinel Connector for automated File and URL analysis via ANY.RUN's Malware Sandbox and Microsoft Defender for Endpoint
+# ANY.RUN Malware Sandbox Integration with Microsoft Sentinel and Defender for Endpoint for automated file and URL analysis
 
 ## Overview
 

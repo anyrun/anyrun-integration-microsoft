@@ -6,7 +6,7 @@
 
 ______________________________________________________________________
 
-# Microsoft Sentinel Connectors for ANY.RUN Malware Sandbox
+# ANY.RUN Malware Sandbox Integration with Microsoft Sentinel 
 
 ## Overview
 
@@ -16,7 +16,7 @@ The connectors enrich Microsoft Sentinel incidents by analyzing URLs or files as
 
 Additionally, your Threat Intelligence portal in Sentinel will be enriched with Indicators of Compromise (IOCs) extracted during the sandbox analysis. You can try out the connectors for free by [getting 14-day trial](https://any.run/demo/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktodemo) of ANY.RUN Sandbox’s Enterprise plan. 
 
-## Capabilities of connectors
+## Integration capabilities
 
 - Enrichment of incidents with:
   - Analysis verdict (malicious, suspicious, unknown) 

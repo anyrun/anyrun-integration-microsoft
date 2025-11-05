@@ -6,7 +6,7 @@
 
 ______________________________________________________________________
 
-# ANY.RUN Connectors for Microsoft Defender for Endpoint
+# ANY.RUN Integration with Microsoft Defender for Endpoint 
 
 This repository provides connectors that enable interoperability between Microsoft Defender for Endpoint (MDE) and [ANY.RUN](https://any.run/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_main&utm_content=linktolanding)'s services:  
 

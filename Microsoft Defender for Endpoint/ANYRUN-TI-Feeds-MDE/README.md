@@ -6,7 +6,7 @@
 
 ______________________________________________________________________
 
-# Microsoft Defender for Endpoint Connector for ANY.RUN’s Threat Intelligence Feeds 
+# ANY.RUN Threat Intelligence Feeds Integration with Microsoft Defender for Endpoint  
 
 ## Overview
 

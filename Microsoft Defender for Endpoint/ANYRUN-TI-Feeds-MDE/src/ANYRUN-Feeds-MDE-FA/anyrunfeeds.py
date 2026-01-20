@@ -56,7 +56,7 @@ class AnyRunFeeds:
     def process_enrichment(self) -> None:
         """ Initializes IOCs enrichment """
         with FeedsConnector(
-            api_key=get_env_variable('ANYRUN_Basic_auth_token'),
+            api_key=get_env_variable('ANYRUN_api_key'),
                 integration=Config.VERSION
         ) as connector:
             connector.check_authorization()

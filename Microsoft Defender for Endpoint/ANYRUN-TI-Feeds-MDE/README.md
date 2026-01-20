@@ -30,10 +30,13 @@ Connect TI Feeds with MDE for an easy access to all the benefits it brings:
 
 ## Requirements
 - Microsoft Defender for Endpoint
-- [ANY.RUN TI Feeds subscription](https://intelligence.any.run/plans/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_tifeeds&utm_content=linktotiplans) and Basic Authentication token. To obtain it, please contact your ANY.RUN account manager directly or [fill out the request form](https://any.run/threat-intelligence-feeds/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_tifeeds&utm_content=linktotifeedslanding#contact-sales). 
+- [ANY.RUN TI Feeds subscription](https://intelligence.any.run/plans/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_tifeeds&utm_content=linktotiplans) and ANY.RUN’s API key (without a prefix). To obtain one, [reach out to our sales team](https://any.run/enterprise/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=microsoftdefender&utm_content=linktoenterprise#contact-sales).
 - Microsoft Azure resources:
   - Logic App with Flex Consumption plan
   - Function App Flex Consumption plan
+
+Note:
+Prefixed API keys and Basic Authentication for TI Feeds won’t be supported in future releases. 
 
 ## Prerequisites
 
@@ -101,16 +104,16 @@ Connect TI Feeds with MDE for an easy access to all the benefits it brings:
 
 - Description of the required parameters:
 
-| Parameter Name                  | Description                                                                 |
-|---------------------------------|-----------------------------------------------------------------------------|
-| functionAppName                 | Function name.                                                              |
-| anyrunBasicToken                | Your ANY.RUN token to access TI Feeds data.                                 |
-| azureClientId                   | Client ID for authentication (ID of the App Registration created before).   |
-| azureClientSecret               | Client Secret for authentication.                                           |
-| azureTenantId                   | Tenant ID for authentication in connections.                                |
-| azureStorageAccountName         | Azure Blob Storage Account Name.                                            |
-| azureStorageConnectionString    | Azure Blob Storage Account Connection string.                               |
-| logAnalyticsWorkspaceName       | Log Analytics Workspace Name.                                               |
+| Parameter Name                  | Description                                                               |
+|---------------------------------|---------------------------------------------------------------------------|
+| functionAppName                 | Function name.                                                            |
+| anyrunApiKey                | Your ANY.RUN API key to access TI Feeds data.                             |
+| azureClientId                   | Client ID for authentication (ID of the App Registration created before). |
+| azureClientSecret               | Client Secret for authentication.                                         |
+| azureTenantId                   | Tenant ID for authentication in connections.                              |
+| azureStorageAccountName         | Azure Blob Storage Account Name.                                          |
+| azureStorageConnectionString    | Azure Blob Storage Account Connection string.                             |
+| logAnalyticsWorkspaceName       | Log Analytics Workspace Name.                                             |
 
 
 ### Deploy Azure Logic App

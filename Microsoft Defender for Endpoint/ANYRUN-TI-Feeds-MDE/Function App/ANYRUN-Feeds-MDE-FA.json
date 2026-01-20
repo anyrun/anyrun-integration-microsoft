@@ -6,10 +6,10 @@
       "type": "string",
       "defaultValue": "ANYRUN-Feeds-MDE-FA"
     },
-    "anyrunBasicToken": {
+    "anyrunApiKey": {
       "type": "securestring",
       "metadata": {
-        "description": "ANY.RUN Basic Token for authentication."
+        "description": "ANY.RUN API key for authentication."
       }
     },
     "AzureClientID": {
@@ -159,8 +159,8 @@
               "value": "[parameters('AzureStorageConnectionString')]"
             },
             {
-              "name": "ANYRUN_Basic_auth_token",
-              "value": "[concat('Basic ', parameters('anyrunBasicToken'))]"
+              "name": "ANYRUN_api_key",
+              "value": "[parameters('anyrunApiKey')]"
             },
             {
               "name": "AzureClientID",

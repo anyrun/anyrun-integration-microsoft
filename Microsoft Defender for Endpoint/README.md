@@ -35,4 +35,4 @@ The connector pulls fresh, high-fidelity threat indicators (IPs, domains, URLs, 
 
 ### Request support or access to ANY.RUN’s products 
 
-Feel free to reach out to us for help with integration, a quote, or demo via the [contact us form](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_main&utm_content=linktocontactus). 
+Feel free to reach out to us for sales, demo, or quote inqueries via the [contact us form](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_main&utm_content=linktocontactus) or write to [techsupport@any.run](mailto:techsupport@any.run) for technical assistance. 

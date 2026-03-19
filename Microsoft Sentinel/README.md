@@ -261,4 +261,4 @@ Since the connectors use various resources available in Azure, the created appli
 
 ## Request Support or Access to ANY.RUN’s Products
 
-Feel free to reach out to us for help with integration, a quote, or a demo via the [contact us form](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktocontactus).
+Feel free to reach out to us for sales, demo, or quote inqueries via the [contact us form](https://app.any.run/contact-us/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=sentinel&utm_content=linktocontactus) or write to [techsupport@any.run](mailto:techsupport@any.run) for technical assistance.

@@ -99,6 +99,11 @@
             "identity": {
                 "type": "SystemAssigned"
             },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('AzureStorageAccountName'))]",
+                "[resourceId('Microsoft.Insights/components', parameters('functionAppName'))]"
+            ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
                 "functionAppConfig": {
@@ -135,12 +140,7 @@
                             "value": "[parameters('AzureStorageConnectionString')]"
                         }
                     ]
-                },
-                "dependsOn": [
-                    "[resourceId('Microsoft.Web/serverfarms', parameters('functionAppName'))]",
-                    "[resourceId('Microsoft.Storage/storageAccounts', parameters('AzureStorageAccountName'))]",
-                    "[resourceId('Microsoft.Insights/components', parameters('functionAppName'))]"
-                ]
+                }
             }
         },
         {

@@ -57,7 +57,7 @@ class AnyRunFeeds:
         """ Initializes IOCs enrichment """
         with FeedsConnector(
             api_key=get_env_variable('ANYRUN_api_key'),
-                integration=Config.VERSION
+            integration=Config.VERSION
         ) as connector:
             connector.check_authorization()
             self._log.info('Successful credentials check.')
@@ -139,7 +139,7 @@ class AnyRunFeeds:
         :param indicators: The list of the ANY.RUN indicators
         """
         url = f'{self._config.DEFENDER_API_URL}/api/indicators/import'
-        indicator_action = get_env_variable('DefenderIndicatorAction', default='Alert')
+        indicator_action = get_env_variable('DefenderIndicatorAction')
 
         for chunk in batched(indicators, 500):
             payload = {'Indicators': []}

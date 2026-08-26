@@ -50,12 +50,10 @@
     },
     "DefenderIndicatorAction": {
       "type": "string",
-      "defaultValue": "Alert",
       "allowedValues": [
-        "Alert",
-        "AlertAndBlock",
-        "Block",
-        "Allowed"
+        "Allowed",
+        "Audit",
+        "Block"
       ],
       "metadata": {
         "description": "Response action applied to indicators created in Microsoft Defender for Endpoint."

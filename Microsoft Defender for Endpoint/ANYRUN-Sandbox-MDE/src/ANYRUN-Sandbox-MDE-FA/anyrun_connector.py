@@ -71,7 +71,7 @@ def process_alert(
             log.info(f'Initialized evidence loading: {filepath}.')
             if file := ms_defender.download_file_from_machine(machine_id, filepath):
                 log.info(f'Evidence is successfully downloaded: {filepath}')
-                setup_anyrun_connector('file', alert_id, machine_os_platform, analysis_options, ms_defender, file, os.path.basename(filepath))
+                setup_anyrun_connector('file', alert_id, machine_os_platform, analysis_options.copy(), ms_defender, file, os.path.basename(filepath))
             else:
                 message = f'Requested file: {filepath} was not found on the machine.'
                 log.warning(message)
@@ -84,14 +84,14 @@ def process_alert(
         for filename in evidences.get('filenames'):
             log.info(f'Initialized evidence loading: {filename}.')
             if file := ms_defender.download_file_from_storage(filename):
-                setup_anyrun_connector('file', alert_id, machine_os_platform, analysis_options, ms_defender, file, filename)
+                setup_anyrun_connector('file', alert_id, machine_os_platform, analysis_options.copy(), ms_defender, file, filename)
             else:
                 message = f'Requested file: {filename} was not found in the blob storage.'
                 log.warning(message)
                 ms_defender.add_comment(alert_id, message)
 
     for url in evidences.get('urls'):
-        setup_anyrun_connector('url',  alert_id, machine_os_platform, analysis_options, ms_defender, url=url)
+        setup_anyrun_connector('url',  alert_id, machine_os_platform, analysis_options.copy(), ms_defender, url=url)
 
 
 def setup_anyrun_connector(

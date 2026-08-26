@@ -139,7 +139,7 @@ class AnyRunFeeds:
         :param indicators: The list of the ANY.RUN indicators
         """
         url = f'{self._config.DEFENDER_API_URL}/api/indicators/import'
-        indicator_action = get_env_variable('DefenderIndicatorAction')
+        indicator_action = get_env_variable('DefenderIndicatorAction', default="Audit")
 
         for chunk in batched(indicators, 500):
             payload = {'Indicators': []}

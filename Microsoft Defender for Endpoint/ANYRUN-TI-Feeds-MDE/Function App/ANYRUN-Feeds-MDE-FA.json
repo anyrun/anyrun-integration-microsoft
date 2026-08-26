@@ -50,6 +50,7 @@
     },
     "DefenderIndicatorAction": {
       "type": "string",
+      "defaultValue": "Audit",
       "allowedValues": [
         "Allowed",
         "Audit",

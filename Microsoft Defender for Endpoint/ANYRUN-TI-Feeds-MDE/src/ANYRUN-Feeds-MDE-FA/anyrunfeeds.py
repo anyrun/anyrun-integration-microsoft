@@ -34,10 +34,12 @@ class AnyRunFeeds:
         """
         Authenticates connector in MS Defender API
         """
+        self._client_id = get_env_variable('AzureClientID')
+
         url = f'https://login.microsoftonline.com/{get_env_variable('AzureTenantID')}/oauth2/token'
         body = {
             'resource': self._config.DEFENDER_API_URL,
-            'client_id': get_env_variable('AzureClientID'),
+            'client_id': self._client_id,
             'client_secret': get_env_variable('AzureClientSecret'),
             'grant_type': 'client_credentials',
         }

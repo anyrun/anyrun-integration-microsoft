@@ -1,16 +1,22 @@
 import os
 
 
-def get_env_variable(name: str) -> str:
+def get_env_variable(name: str, default: str | None = None) -> str:
     """
     Retrieves environment variable value
 
     :param name: Environment variable name
+    :param default: Value to return if the variable is not set; when omitted, missing variable raises
     :return: Environment variable value
-    :raises ValueError: If variable is not set
+    :raises ValueError: If variable is not set and no default is provided
     """
-    if not (variable := os.environ.get(name)):
+    variable = os.environ.get(name)
+
+    if not variable:
+        if default is not None:
+            return default
         raise ValueError(f'Environment variable {name} is not set.')
+        
     return variable
 
 

@@ -1,8 +1,8 @@
 import json
-import time
 import traceback
+from datetime import UTC, datetime, timedelta
 from itertools import batched
-from datetime import datetime, timedelta, UTC
+from urllib.parse import quote
 
 import requests
 from anyrun import RunTimeException
@@ -10,10 +10,10 @@ from anyrun.connectors import FeedsConnector
 
 from .config import Config
 from .utils import (
-    get_env_variable,
     extract_indicator_data,
+    get_description,
+    get_env_variable,
     get_severity,
-    get_description
 )
 
 DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -34,10 +34,12 @@ class AnyRunFeeds:
         """
         Authenticates connector in MS Defender API
         """
+        self._client_id = get_env_variable('AzureClientID')
+
         url = f'https://login.microsoftonline.com/{get_env_variable('AzureTenantID')}/oauth2/token'
         body = {
             'resource': self._config.DEFENDER_API_URL,
-            'client_id': get_env_variable('AzureClientID'),
+            'client_id': self._client_id,
             'client_secret': get_env_variable('AzureClientSecret'),
             'grant_type': 'client_credentials',
         }
@@ -57,7 +59,7 @@ class AnyRunFeeds:
         """ Initializes IOCs enrichment """
         with FeedsConnector(
             api_key=get_env_variable('ANYRUN_api_key'),
-                integration=Config.VERSION
+            integration=Config.VERSION
         ) as connector:
             connector.check_authorization()
             self._log.info('Successful credentials check.')
@@ -94,7 +96,11 @@ class AnyRunFeeds:
 
         :return: The list of the indicator identifiers
         """
-        url = f"{self._config.DEFENDER_API_URL}/api/indicators?filter=title+eq+'IoC from ANY.RUN TI Feeds'"
+        # 'title' is not a reliably filterable indicator property in the Defender API; scope the
+        # query to indicators created by this app's own identity so unrelated/manual indicators
+        # (e.g. hand-added hashes) are never matched and deleted.
+        odata_filter = quote(f"createdBy eq '{self._client_id}'")
+        url = f'{self._config.DEFENDER_API_URL}/api/indicators?$filter={odata_filter}'
 
         response = self._make_request('GET', url)
 
@@ -124,7 +130,7 @@ class AnyRunFeeds:
         if indicators:
             self._log.info(f'Found {len(indicators)} indicators.')
         else:
-            self._log.warning(f'No indicators found in ANY.RUN TI.')
+            self._log.warning('No indicators found in ANY.RUN TI.')
 
         return indicators
 
@@ -135,13 +141,21 @@ class AnyRunFeeds:
         :param indicators: The list of the ANY.RUN indicators
         """
         url = f'{self._config.DEFENDER_API_URL}/api/indicators/import'
+        indicator_action = get_env_variable('DefenderIndicatorAction', default="Audit")
 
         for chunk in batched(indicators, 500):
             payload = {'Indicators': []}
 
             for indicator in chunk:
-                indicator_type, indicator_value = extract_indicator_data(indicator.get('pattern'))
                 severity = get_severity(indicator.get('confidence'))
+
+                if severity == 'Informational':
+                    # Confidence 0 means the value was only observed (e.g. an IP seen along an
+                    # analysis hop), not flagged malicious - skip it so the feed doesn't flood
+                    # Defender with indicators that aren't safe to alert or block on.
+                    continue
+
+                indicator_type, indicator_value = extract_indicator_data(indicator.get('pattern'))
                 description = get_description(indicator.get('external_references'))
                 indicator_type = {'ipv4-addr': 'IpAddress', 'domain-name': 'DomainName', 'url': 'Url'}.get(indicator_type)
 
@@ -150,7 +164,7 @@ class AnyRunFeeds:
                         'indicatorValue': indicator_value,
                         'title': 'IoC from ANY.RUN TI Feeds',
                         'description': description,
-                        'action': 'Allowed',
+                        'action': indicator_action,
                         'generateAlert': 'True',
                         'severity': severity,
                         'indicatorType': indicator_type

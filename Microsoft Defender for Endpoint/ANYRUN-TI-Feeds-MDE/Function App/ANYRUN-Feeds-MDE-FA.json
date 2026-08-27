@@ -47,6 +47,18 @@
       "metadata": {
         "description": "Log Analytics Workspace Name."
       }
+    },
+    "DefenderIndicatorAction": {
+      "type": "string",
+      "defaultValue": "Audit",
+      "allowedValues": [
+        "Allowed",
+        "Audit",
+        "Block"
+      ],
+      "metadata": {
+        "description": "Response action applied to indicators created in Microsoft Defender for Endpoint."
+      }
     }
   },
   "variables": {
@@ -173,6 +185,10 @@
             {
               "name": "AzureTenantID",
               "value": "[parameters('AzureTenantID')]"
+            },
+            {
+              "name": "DefenderIndicatorAction",
+              "value": "[parameters('DefenderIndicatorAction')]"
             }
           ]
         }

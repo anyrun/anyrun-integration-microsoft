@@ -1,6 +1,11 @@
 import os
 
 
+DEFAULT_MINIMUM_CONFIDENCE_THRESHOLD = 50
+MINIMUM_CONFIDENCE_THRESHOLD_MIN = 1
+MINIMUM_CONFIDENCE_THRESHOLD_MAX = 100
+
+
 def get_env_variable(name: str, default: str | None = None) -> str:
     """
     Retrieves environment variable value
@@ -18,6 +23,66 @@ def get_env_variable(name: str, default: str | None = None) -> str:
         raise ValueError(f'Environment variable {name} is not set.')
         
     return variable
+
+
+def validate_minimum_confidence_threshold(value: int | str) -> int:
+    """Validate and normalize the inclusive confidence threshold."""
+    error_message = 'minimum_confidence_threshold must be an integer from 1 to 100.'
+
+    if isinstance(value, bool) or not isinstance(value, (int, str)):
+        raise ValueError(error_message)
+
+    try:
+        minimum_confidence_threshold = int(value)
+    except (TypeError, ValueError) as error:
+        raise ValueError(error_message) from error
+
+    if not (
+        MINIMUM_CONFIDENCE_THRESHOLD_MIN
+        <= minimum_confidence_threshold
+        <= MINIMUM_CONFIDENCE_THRESHOLD_MAX
+    ):
+        raise ValueError(error_message)
+
+    return minimum_confidence_threshold
+
+
+def filter_indicators_by_minimum_confidence_threshold(
+    indicators: list[dict],
+    minimum_confidence_threshold: int,
+) -> tuple[list[dict], int, int]:
+    """
+    Select indicators whose STIX confidence meets the inclusive threshold.
+
+    Indicators with missing, boolean, non-numeric, or out-of-range confidence
+    values are excluded. Returns selected indicators and counts of indicators
+    excluded for low and invalid confidence respectively.
+    """
+    minimum_confidence_threshold = validate_minimum_confidence_threshold(
+        minimum_confidence_threshold,
+    )
+    selected = []
+    below_threshold = 0
+    invalid_confidence = 0
+
+    for indicator in indicators:
+        confidence = indicator.get('confidence')
+
+        if (
+            isinstance(confidence, bool)
+            or not isinstance(confidence, int)
+            or not 0 <= confidence <= MINIMUM_CONFIDENCE_THRESHOLD_MAX
+        ):
+            invalid_confidence += 1
+            continue
+
+        if confidence < minimum_confidence_threshold:
+            below_threshold += 1
+            continue
+
+        selected.append(indicator)
+
+    return selected, below_threshold, invalid_confidence
 
 
 def extract_indicator_data(pattern: str) -> tuple[str, str]:

@@ -20,6 +20,15 @@
                 "description": "Depth of the feed to fetch (in days)"
             }
         },
+        "minimumConfidenceThreshold": {
+            "defaultValue": 50,
+            "type": "int",
+            "minValue": 1,
+            "maxValue": 100,
+            "metadata": {
+                "description": "Import indicators with confidence greater than or equal to this value (inclusive, 1-100)."
+            }
+        },
         "functionAppName": {
             "defaultValue": "ANYRUN-Feeds-MDE-FA",
             "type": "String",
@@ -88,6 +97,11 @@
                                         "name": "feed_fetch_depth",
                                         "type": "integer",
                                         "value": "[parameters('feedFetchDepth')]"
+                                    },
+                                    {
+                                        "name": "minimum_confidence_threshold",
+                                        "type": "integer",
+                                        "value": "[parameters('minimumConfidenceThreshold')]"
                                     }
                                 ]
                             }
@@ -101,7 +115,8 @@
                             "type": "Function",
                             "inputs": {
                                 "body": {
-                                    "feed_fetch_depth": "@variables('feed_fetch_depth')"
+                                    "feed_fetch_depth": "@variables('feed_fetch_depth')",
+                                    "minimum_confidence_threshold": "@variables('minimum_confidence_threshold')"
                                 },
                                 "function": {
                                     "id": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', variables('connectFunctionAppName'), '/functions/ANYRUN-Feeds-MDE-FA')]"

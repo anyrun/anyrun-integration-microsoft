@@ -133,6 +133,7 @@ Prefixed API keys and Basic Authentication for TI Feeds won’t be supported in 
 | logicAppName                    | Workflow name.                                                              |
 | intervalRecurrence              | Interval of recurrence for the logic app (in hours).                        |
 | feedFetchDepth                  | Depth of the feed to fetch (in days).                                       |
+| minimumConfidenceThreshold      | Minimum STIX confidence threshold, from 1 to 100 (default: 50).             |
 | functionAppName                 | Name of the Function App deployed before.                                   |
 
 ## Logic App Configuration (Optional)
@@ -151,8 +152,17 @@ You can change the recurrence interval at which the Logic App will run and updat
 
 You can change the fetch depth of indicators in ANY.RUN TI Feeds. This parameter determines the period for which to extract data from ANY.RUN TI Feeds.
 
-- Open your Logic App ANYRUN-Feeds-MDE-LA, navigate to **Development tools** > **Logic app designer**.
+- Open your Logic App **ANYRUN-Feeds-MDE-LA**, navigate to **Development tools** > **Logic app designer**.
 
 - Select the `Initialize variables` action and specify the required value in days in the `feed_fetch_depth` variable.
+
+
+### Minimum Confidence Threshold
+
+The connector filters every newly downloaded batch before importing it into Microsoft Defender for Endpoint. Only indicators whose STIX `confidence` value is greater than or equal to the Logic App's `minimum_confidence_threshold` variable are imported. The default value is `50`; adjust it when you are ready to evaluate indicators with a different confidence level.
+
+- Open your Logic App **ANYRUN-Feeds-MDE-LA**, navigate to **Development tools** > **Logic app designer**.
+
+- Open the `Initialize variables` action and change the value of `minimum_confidence_threshold` to an integer from `1` to `100`.
 
 ![feed_fetch_depth](images/013.png)

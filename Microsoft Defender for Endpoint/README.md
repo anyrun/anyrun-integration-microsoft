@@ -15,16 +15,6 @@ This repository provides connectors that enable interoperability between Microso
 
 The connector automates threat analysis from MDE alerts by retrieving up-to-date data from sandbox detonations of associated objects, enriching alerts with relevant intelligence to optimize investigations.
 
-## Choose MDE or Sentinel integration
-
-Use this **Microsoft Defender for Endpoint** integration when Defender/XDR
-alerts are processed directly without Sentinel orchestration. Use the repository's
-**Microsoft Sentinel** integration when incidents are handled by Sentinel
-playbooks. Do not enable both integrations for the same alerts or endpoint pool:
-both can submit the same evidence and compete for the device's single active
-Live Response session, producing `ActiveRequestAlreadyExists`, duplicate ANY.RUN
-tasks, and duplicate indicators.
-
 ## Malware Sandbox Connector
 
 **Latest Version:** 1.1.1

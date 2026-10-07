@@ -12,7 +12,7 @@ ______________________________________________________________________
 
 This connector integrates Microsoft Defender for Endpoint (MDE) with the [ANY.RUN Sandbox](https://any.run/features/?utm_source=anyrungithub&utm_medium=documentation&utm_campaign=ms_defender_tifeeds&utm_content=linktosandboxlanding) to enrich MDE alerts through automated malware analysis. It triggers automatically upon the registration of a new alert in MDE, extracting and analyzing entities such as URLs or files associated with the alert.
 
-The enrichment process adds valuable context directly to the alert: comments include the ANY.RUN verdict, threat score, a link to the detailed analysis report, and any Indicators of Compromise (IOCs) discovered during the sandbox detonation. Extracted IoCs are also imported into MDE's local Threat Intelligence lists for enhanced detection and response, unless indicator import is set to `Disabled`.
+The enrichment process adds valuable context directly to the alert: comments include the ANY.RUN verdict, threat score, a link to the detailed analysis report, and any Indicators of Compromise (IOCs) discovered during the sandbox detonation. Extracted IoCs are also imported into MDE's local Threat Intelligence lists for enhanced detection and response.
 
 This connector empowers SOC teams with deeper insights into potential threats, accelerating triage, reducing false positives, and enabling proactive hunting — all while leveraging ANY.RUN's interactive sandbox capabilities for real-time behavioral analysis.
 
@@ -24,86 +24,9 @@ This connector empowers SOC teams with deeper insights into potential threats, a
   - Function App Flex Consumption plan
   - Blob Storage
 
-The connector can be installed automatically with the PowerShell installer
-([installer guide](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Defender%20for%20Endpoint/Scripts)) or manually. See
-[Installation](#installation).
+The connector can be installed automatically using the [PowerShell installer](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Defender%20for%20Endpoint/Scripts), or manually. For details, see [Installation](#installation) below.
 
 ## Solution Overview
-
-The connector uses a tracked asynchronous workflow:
-
-1. The Logic App starts `ANYRUN-Sandbox-MDE-FA`.
-2. The starter validates the request, creates a private job-status record, puts
-   the work on the `anyrun-mde-jobs` queue, and returns `202 Accepted` with a
-   `job_id` in a few seconds. A transient status-blob write is retried before
-   enqueue; a persistent failure returns `500` without creating queue work.
-3. `ANYRUN-Sandbox-MDE-Worker` performs Live Response, submits every available
-   file or URL to ANY.RUN, waits for the result, and enriches the Defender alert.
-4. While the worker runs, the Logic App polls the short-lived
-   `ANYRUN-Sandbox-MDE-Status` Function. Run history therefore shows separate
-   **Evidence submitted to ANY.RUN** and **ANY.RUN verdict received** actions.
-
-Long-running work never remains inside an HTTP request. This avoids the Logic
-App/Function HTTP timeout while still keeping the outcome visible in the same
-Logic App run.
-
-### Recovery after a worker restart
-
-Queue delivery is attempted up to three times; after that the message moves to
-the `anyrun-mde-jobs-poison` queue. After an ordinary worker failure,
-`visibilityTimeout` delays retry by 60 seconds (previously five minutes), plus
-queue polling and scheduling time. This allows faster recovery from transient
-failures, but uses the three attempts sooner during a sustained outage. It does
-not change Azure's ten-minute visibility timeout after a host crash or bypass
-the submission checkpoints that prevent duplicate paid tasks.
-
-The worker stores a durable
-checkpoint for each evidence before submission and immediately after receiving
-its ANY.RUN task UUID. A retry resumes the same saved task without collecting
-its file or paying for another analysis. Saved verdicts and completed enrichment
-steps are reused. A renewing, 60-second blob lease prevents overlapping workers
-for the same job; it expires if the process dies.
-
-The worker writes a best-effort heartbeat every minute, including during Live
-Response. Heartbeats do not grow the transition history. The Status endpoint is
-read-only and projects an inactive nonterminal job as `failed/stale` after
-15 minutes without updates. This does not prove the analysis failed: Storage
-may be unavailable, and the task link remains the source for the sandbox result.
-Azure may return a crashed host's queue message after ten minutes, so the stale
-threshold intentionally leaves time for recovery and cold start.
-
-Verdict waiting uses bounded report requests every 20 seconds instead of an SSE
-stream. The deadline reads `opt_timeout` from the Logic App and adds a ten-minute
-margin. Reported remaining time or an explicit running status can extend it,
-subject to the persisted 90-minute overall budget, including retry delays.
-
-Report polling tolerates HTTP 404/409/425/429/5xx and transport failures inside
-the wait budget, with at most ten consecutive errors per delivery. Completion
-requires an explicit `done`/`completed`/100 status and a verdict; a missing or
-unknown status never turns a provisional verdict into a final one. Validate
-the running and completed report schema against your tenant before acceptance.
-GET requests are bounded at 60 seconds; paid analysis POSTs have a separate
-300-second limit, both capped by the remaining job budget. Explicit submission
-rejections (400/401/403/413/422) are terminal; an explicit 429 clears the intent
-and permits queue retry. Ambiguous POST failures still require manual recovery.
-
-Update both the Function ZIP and the Logic App submission loop limits:
-480 iterations and `PT2H`. Changing only the timeout leaves the old 240-iteration
-limit in place. Preserve your existing analysis options and connection settings.
-
-**Resubmit in Logic App creates a new job and can create another paid task.**
-For an interrupted job, first inspect its status blob and task UUID. After
-installing this update, replay the original queue payload with the **same job ID**
-to resume a recoverable job. Do not remove its status blob. Already terminal
-failed jobs require investigation before a deliberate recovery change.
-
-If the paid POST may have succeeded but no UUID was saved, the worker reports
-`RecoveryRequired` and refuses automatic resubmission. A hash match in account
-history is insufficient to identify the right task. Check the account history
-and restore the exact UUID before recovery. Comment checkpoints and checks of
-existing Defender comments avoid ordinary replay duplicates; the remote
-comment API has no transaction shared with Blob, so exactly-once writes across
-both systems cannot be guaranteed during an ambiguous network failure.
 
 ## Installation
 
@@ -171,14 +94,9 @@ complete the steps in this section, then continue with
 | Alert                | Alert.ReadWrite.All | Needed to enrich alerts with sample information                        |
 | Machine              | Machine.LiveResponse | Starts and cancels Live Response actions                              |
 | Machine              | Machine.ReadWrite.All | Reads machine information and MachineAction objects; downloads Live Response results |
-| Ti                   | Ti.ReadWrite        | Submits indicators found by ANY.RUN                                   |
+| Ti                   | Ti.Read.All         | Needed to retrieve indicators |
+| Ti                   | Ti.ReadWrite        | Submits indicators found by ANY.RUN                                  |
 | Library              | Library.Manage      | Needed to upload custom ps1 script for retrieving AV related evidences |
-
-`Machine.ReadWrite.All` is required for application tokens by the
-`machineactions` and `GetLiveResponseResultDownloadLink` APIs. Granting only
-`Machine.LiveResponse` is not sufficient for this connector.
-A separate `Machine.Read.All` permission is unnecessary when
-`Machine.ReadWrite.All` is granted.
 
 #### Storage Account
 
@@ -236,90 +154,9 @@ the template grants the Function App managed identity
 | AzureStorageConnectionString | Azure Blob Storage Account Connection string.                               |
 | AzureBlobContainerName       | Azure Blob Storage Container Name. Default: `anyrun-quarantine`.           |
 | ANYRUN_API_KEY               | API Key of your ANY.RUN Account.                                            |
-| DefenderIndicatorAction      | `Audit` (default; alert on match), `Block`, or `Disabled` (do not import IOCs into Defender; they stay in alert comments). Imported indicators always generate alerts, as Microsoft requires for `Audit`. |
+| DefenderIndicatorAction      | `Audit` (default; alert on match), `Block`, or `Disabled` (do not import IOCs into Defender; they stay in alert comments). |
 | ConfigureEvidenceLifecyclePolicy | Delete evidence after one day and job status after seven days. Enable only for a dedicated Storage Account. |
 | LogAnalyticsWorkspaceName    | Log Analytics Workspace Name.                                               |
-
-### Asynchronous execution
-
-The starter HTTP Function returns `202 Accepted` immediately, and
-`ANYRUN-Sandbox-MDE-Worker` performs Live Response, waits for ANY.RUN, and
-enriches the alert. `DisableAsyncPattern` applies only to the short starter call;
-the Logic App then uses explicit status polling instead of keeping that HTTP
-request open.
-
-One background thread renews the worker lease and writes periodic heartbeats.
-Verdict polling publishes progress only when it changes; remaining-time updates
-are limited to once per minute, while changes of task status are immediate.
-Optional progress writes are best-effort single attempts. Durable checkpoints
-and terminal results retain bounded retries. Comment checkpoints skip completed
-steps; recovery also checks existing Defender comments before replaying an
-unfinished comment. Fresh analyses do not perform these extra comment GETs.
-
-This optimization does not change the SDK, TLS certificate-verification
-settings, queue retries, Live Response timing or the two Logic App wait stages.
-
-In **Logic App > Runs history**, open a run and expand these actions:
-
-- **Evidence submitted to ANY.RUN** — job ID, evidence name/type, file SHA-256,
-  ANY.RUN task UUID, and task URL;
-- **ANY.RUN verdict received** — terminal state plus all analyses, verdicts,
-  scores, task links, and IOC counts.
-
-The run stays in progress while the queue worker is active and succeeds only
-after the worker stores the final result. Recoverable worker failures leave it
-in progress while queue retries resume checkpoints; terminal failures terminate
-the run and add a best-effort comment to the Defender alert. Function/Application
-Insights remains the detailed diagnostic source.
-Job status is stored as JSON in the private `anyrun-job-status` blob container;
-API keys, credentials, file bytes, and SAS query strings are never written to
-that record.
-
-If Defender enrichment succeeds but the final job-status write fails, the
-worker requests a safe queue retry using its saved `enriched` checkpoints.
-If Storage remains unavailable, the Logic App may still show `Failed` through
-the stale-status projection despite a completed analysis. Use the tracking
-warning on the alert and Function logs to investigate; Logic App Resubmit
-creates a new job and is not a recovery of the existing task.
-
-Live Response permits only one active session per device. RunScript can execute
-for up to 10 minutes. The connector limits its own wait to 15 minutes and does
-not cancel another product's session. Avoid running this connector and a
-Sentinel playbook against the same device pool.
-
-After Defender accepts a new Live Response action and returns its ID, the worker
-waits 10 seconds before the first status check. This initial delay happens only
-once per accepted action, not on every status check or failed submission. It is
-not a readiness guarantee and does not replace the success-status check.
-The subsequent Pending/InProgress polling interval remains 30 seconds.
-
-Its `machineactions` read
-endpoint can briefly return `404 ResourceNotFound`. The worker treats only that
-specific response as eventual consistency, retries every 10 seconds for up to
-3 minutes, and still fails immediately on other HTTP errors.
-
-The worker also has a 90-minute application deadline, leaving time to add a
-failure comment before the two-hour Azure Functions timeout. A missing EDR file
-does not stop the remaining files or URLs. The AV script succeeds when at least
-one requested file was uploaded; Python then reports missing blobs individually.
-If RunScript itself fails, the connector makes a best-effort cleanup of every
-planned blob.
-
-Defender rejects script parameters containing shell metacharacters such as
-`; & | ! $ ( )`. The connector therefore uses a versioned Base64URL envelope.
-The Antivirus collection path uses a random blob name and a 30-minute,
-create-only SAS scoped to that single blob.
-
-The Function template contains optional lifecycle rules: orphan evidence is
-deleted after one day and job-status JSON after seven days. Keep
-`ConfigureEvidenceLifecyclePolicy=false` for a shared or existing Storage
-Account: Azure stores one lifecycle-policy document per account, so replacing
-it could affect unrelated rules. The automated installer enables these rules
-only when it created a dedicated Sandbox Storage Account.
-
-The `analysisPrivacyType` Logic App parameter defaults to `bylink`. Select
-`owner` during deployment for private tasks; this requires an ANY.RUN plan that
-supports them.
 
 ### Deploy Azure Logic App
 
@@ -340,7 +177,7 @@ supports them.
 | azureClientId                   | Azure Client ID for authentication (ID of the App Registration created before). |
 | azureClientSecret               | Azure Client Secret for authentication.                                     |
 | functionAppName                 | Name of the Function App deplyed before.                                    |
-| analysisPrivacyType             | `bylink` (default) or `owner` (private-plan support required).              |
+| analysisPrivacyType             | `bylink` (default) or `owner`.              |
 
 
 ## Microsoft Defender for Endpoint Configuration

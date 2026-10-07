@@ -38,9 +38,7 @@ Connect TI Feeds with MDE for an easy access to all the benefits it brings:
 Note:
 Prefixed API keys and Basic Authentication for TI Feeds won’t be supported in future releases. 
 
-The connector can be installed automatically with the PowerShell installer
-([installer guide](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Defender%20for%20Endpoint/Scripts)) or manually. See
-[Installation](#installation).
+The connector can be installed automatically using the [PowerShell installer](https://github.com/anyrun/anyrun-integration-microsoft/tree/main/Microsoft%20Defender%20for%20Endpoint/Scripts), or manually. For details, see [Installation](#installation) below.
 
 ## Installation
 
@@ -106,33 +104,10 @@ complete the steps in this section, then continue with
 | Category | Permission Name | Description                                                     |
 |----------|-----------------|-----------------------------------------------------------------|
 | Ti       | Ti.ReadWrite    | Retrieve and manage indicators created by this application.     |
+| Ti       | Ti.Read.All     | Needed to retrieve indicators.                                  |
 
-Do not reuse this App Registration for another connector or workload. The Feeds
-connector replaces indicators owned by its own client ID.
-
-Every successful refresh downloads and prepares the current ANY.RUN feed, deletes
-**all indicators created by this dedicated Feeds application**, then imports the
-entire prepared set, including values already present in the previous run. This
-matches the original connector's full-refresh policy; it does not accumulate
-incremental batches. Manual indicators and indicators created by other apps are
-outside the deletion query. A feed reaching the 10,000-object request limit is
-still fully refreshed. A valid empty selected feed clears the previous set.
-Download, authorization or preparation errors stop the run before deletion.
-
-Deletion and import are separate API operations: indicators are temporarily
-absent during replacement. If import fails, the set may remain incomplete until
-a later successful run. Partial per-indicator rejection returns HTTP 200 with status
-`completed_with_warnings`, accepted/rejected counts, and up to ten rejection
-details. Failed requests, authorization errors, deletion failures, and invalid
-import responses still return HTTP 500.
-Microsoft documents a tenant-wide limit of 15,000 active indicators, shared with
-other sources; full refresh prevents this app's previous batches from accumulating,
-but does not reserve capacity against indicators from other integrations.
-[Microsoft API limits](https://learn.microsoft.com/en-us/defender-endpoint/api/import-ti-indicators).
 
 ## Manual Deployment
-
-The Function template and ZIP package are in `Function App/`.
 
 ### Deploy Azure Function App
 

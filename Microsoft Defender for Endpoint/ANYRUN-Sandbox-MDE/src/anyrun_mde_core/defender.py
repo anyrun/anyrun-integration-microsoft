@@ -20,6 +20,7 @@ from .utils import (
     generate_ioc_comment,
     generate_task_uuid_comment,
     get_env_variable,
+    get_task_url,
     sanitize_error_text,
 )
 
@@ -768,7 +769,7 @@ class MicrosoftDefender:
                 {
                     "indicatorValue": indicator.get("ioc"),
                     "title": "IoC from ANY.RUN Sandbox",
-                    "description": f"https://app.any.run/tasks/{task_uuid}",
+                    "description": get_task_url(task_uuid),
                     "action": indicator_action,
                     "generateAlert": True,
                     "severity": {1: "Medium", 2: "High"}.get(

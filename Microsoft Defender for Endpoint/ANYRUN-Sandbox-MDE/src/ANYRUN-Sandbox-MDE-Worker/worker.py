@@ -13,7 +13,7 @@ from anyrun_mde_core.defender import MicrosoftDefender
 from anyrun_mde_core.job_status import JobStatusStore
 from anyrun_mde_core.processor import RecoveryRequired, process_alert
 from anyrun_mde_core.sandbox_client import BoundedBaseConnector
-from anyrun_mde_core.utils import get_env_variable, sanitize_error_text
+from anyrun_mde_core.utils import get_anyrun_base_domain, get_env_variable, sanitize_error_text
 
 STATUS_WRITE_ATTEMPTS = 3
 TERMINAL_STATUS_WRITE_ATTEMPTS = 5
@@ -192,6 +192,7 @@ def _run_job(
         else:
             with BoundedBaseConnector(
                 api_key=get_env_variable("ANYRUN_API_KEY"),
+                root_url=get_anyrun_base_domain(),
                 integration=Config.VERSION,
                 deadline_monotonic=deadline_monotonic,
             ) as connector:

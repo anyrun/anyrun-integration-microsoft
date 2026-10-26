@@ -14,7 +14,9 @@ from .defender import MicrosoftDefender
 from .sandbox_client import BoundedLinuxConnector, BoundedWindowsConnector
 from .utils import (
     clear_indicators,
+    get_anyrun_base_domain,
     get_env_variable,
+    get_task_url,
     prepare_url_analysis_options,
     sanitize_error_text,
 )
@@ -220,6 +222,7 @@ def setup_anyrun_connector(
         return None
     with connector_type(
         api_key=get_env_variable("ANYRUN_API_KEY"),
+        root_url=get_anyrun_base_domain(),
         integration=Config.VERSION,
         deadline_monotonic=deadline_monotonic,
     ) as connector:
@@ -335,7 +338,7 @@ def process_analysis(
             )
         item.update(
             task_uuid=str(task_uuid),
-            task_url=f"https://app.any.run/tasks/{task_uuid}",
+            task_url=get_task_url(task_uuid),
             submitted_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         )
         save("submitted_to_anyrun")

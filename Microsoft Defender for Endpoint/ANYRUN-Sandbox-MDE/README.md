@@ -154,6 +154,7 @@ the template grants the Function App managed identity
 | AzureStorageConnectionString | Azure Blob Storage Account Connection string.                               |
 | AzureBlobContainerName       | Azure Blob Storage Container Name. Default: `anyrun-quarantine`.           |
 | ANYRUN_API_KEY               | API Key of your ANY.RUN Account.                                            |
+| ANYRUN_BASE_DOMAIN           | The base domain for the ANY.RUN connection. By default, the domain is `any.run`.            |
 | DefenderIndicatorAction      | `Audit` (default; alert on match), `Block`, or `Disabled` (do not import IOCs into Defender; they stay in alert comments). |
 | ConfigureEvidenceLifecyclePolicy | Delete evidence after one day and job status after seven days. Enable only for a dedicated Storage Account. |
 | LogAnalyticsWorkspaceName    | Log Analytics Workspace Name.                                               |

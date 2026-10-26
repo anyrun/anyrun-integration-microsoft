@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import json
 import os
 import re
@@ -11,9 +9,8 @@ from typing import Any
 from azure.core.exceptions import ResourceNotFoundError
 from azure.storage.blob import BlobServiceClient, ContentSettings
 
-
-JOB_ID_PATTERN = re.compile(r'^[A-Za-z0-9-]{1,64}$')
-DEFAULT_CONTAINER_NAME = 'anyrun-job-status'
+JOB_ID_PATTERN = re.compile(r"^[A-Za-z0-9-]{1,64}$")
+DEFAULT_CONTAINER_NAME = "anyrun-job-status"
 STATUS_STORAGE_CONNECTION_TIMEOUT_SECONDS = 3
 STATUS_STORAGE_READ_TIMEOUT_SECONDS = 5
 
@@ -37,12 +34,14 @@ class JobStatusStore:
         ).get_container_client(container_name)
 
     @classmethod
-    def from_environment(cls) -> 'JobStatusStore':
-        connection_string = os.environ.get('AzureStorageConnectionString', '').strip()
+    def from_environment(cls) -> "JobStatusStore":
+        connection_string = os.environ.get("AzureStorageConnectionString", "").strip()
         if not connection_string:
-            raise RuntimeError('AzureStorageConnectionString is not configured.')
+            raise RuntimeError("AzureStorageConnectionString is not configured.")
         container_name = (
-            os.environ.get('AnyRunJobStatusContainerName', DEFAULT_CONTAINER_NAME).strip()
+            os.environ.get(
+                "AnyRunJobStatusContainerName", DEFAULT_CONTAINER_NAME
+            ).strip()
             or DEFAULT_CONTAINER_NAME
         )
         return cls(connection_string, container_name)
@@ -50,17 +49,17 @@ class JobStatusStore:
     def create(self, job_id: str, alert_id: str) -> dict[str, Any]:
         timestamp = _utc_now()
         status = {
-            'job_id': _validate_job_id(job_id),
-            'alert_id': str(alert_id)[:256],
-            'state': 'queued',
-            'stage': 'queued',
-            'created_at': timestamp,
-            'updated_at': timestamp,
-            'history': [
+            "job_id": _validate_job_id(job_id),
+            "alert_id": str(alert_id)[:256],
+            "state": "queued",
+            "stage": "queued",
+            "created_at": timestamp,
+            "updated_at": timestamp,
+            "history": [
                 {
-                    'state': 'queued',
-                    'stage': 'queued',
-                    'timestamp': timestamp,
+                    "state": "queued",
+                    "stage": "queued",
+                    "timestamp": timestamp,
                 }
             ],
         }
@@ -68,14 +67,14 @@ class JobStatusStore:
         return status
 
     def get(self, job_id: str) -> dict[str, Any] | None:
-        blob = self._container.get_blob_client(f'{_validate_job_id(job_id)}.json')
+        blob = self._container.get_blob_client(f"{_validate_job_id(job_id)}.json")
         try:
             payload = blob.download_blob().readall()
         except ResourceNotFoundError:
             return None
         status = json.loads(payload)
         if not isinstance(status, dict):
-            raise RuntimeError('Stored ANY.RUN job status is not a JSON object.')
+            raise RuntimeError("Stored ANY.RUN job status is not a JSON object.")
         return status
 
     def update(
@@ -91,32 +90,38 @@ class JobStatusStore:
         with self._mutex:
             return self._update(job_id, state=state, stage=stage, **details)
 
-    def _update(self, job_id: str, *, state: str, stage: str | None = None, **details: Any) -> dict[str, Any]:
+    def _update(
+        self, job_id: str, *, state: str, stage: str | None = None, **details: Any
+    ) -> dict[str, Any]:
         status = self.get(job_id)
         if status is None:
-            raise RuntimeError(f'ANY.RUN job status {job_id} does not exist.')
+            raise RuntimeError(f"ANY.RUN job status {job_id} does not exist.")
 
         timestamp = _utc_now()
         safe_state = str(state)[:64]
         safe_stage = str(stage or state)[:96]
         status.update(_json_safe(details))
-        status.update({
-            'state': safe_state,
-            'stage': safe_stage,
-            'updated_at': timestamp,
-        })
-        if safe_state in {'completed', 'failed'}:
-            status['completed_at'] = timestamp
-        history = status.setdefault('history', [])
+        status.update(
+            {
+                "state": safe_state,
+                "stage": safe_stage,
+                "updated_at": timestamp,
+            }
+        )
+        if safe_state in {"completed", "failed"}:
+            status["completed_at"] = timestamp
+        history = status.setdefault("history", [])
         if not isinstance(history, list):
             history = []
-            status['history'] = history
-        history.append({
-            'state': safe_state,
-            'stage': safe_stage,
-            'timestamp': timestamp,
-        })
-        status['history'] = history[-50:]
+            status["history"] = history
+        history.append(
+            {
+                "state": safe_state,
+                "stage": safe_stage,
+                "timestamp": timestamp,
+            }
+        )
+        status["history"] = history[-50:]
         self._write(status)
         return status
 
@@ -124,19 +129,20 @@ class JobStatusStore:
         """Refresh liveness without growing history or reviving terminal jobs."""
         with self._mutex:
             status = self.get(job_id)
-            if status is None or status.get('state') in {'completed', 'failed'}:
+            if status is None or status.get("state") in {"completed", "failed"}:
                 return
             status.update(_json_safe(details))
-            status['updated_at'] = status['heartbeat_at'] = _utc_now()
+            status["updated_at"] = status["heartbeat_at"] = _utc_now()
             self._write(status)
 
     @contextmanager
     def claim(self, job_id: str):
         """One worker per job; the 60-second lease expires after process death."""
         from azure.core.exceptions import ResourceExistsError
-        blob = self._container.get_blob_client(f'{_validate_job_id(job_id)}.lock')
+
+        blob = self._container.get_blob_client(f"{_validate_job_id(job_id)}.lock")
         try:
-            blob.upload_blob(b'', overwrite=False)
+            blob.upload_blob(b"", overwrite=False)
         except ResourceExistsError:
             pass
         lease = blob.acquire_lease(lease_duration=60)
@@ -150,27 +156,27 @@ class JobStatusStore:
                 pass
 
     def _write(self, status: dict[str, Any]) -> None:
-        job_id = _validate_job_id(str(status['job_id']))
+        job_id = _validate_job_id(str(status["job_id"]))
         payload = json.dumps(
             _json_safe(status),
             ensure_ascii=False,
-            separators=(',', ':'),
-        ).encode('utf-8')
-        self._container.get_blob_client(f'{job_id}.json').upload_blob(
+            separators=(",", ":"),
+        ).encode("utf-8")
+        self._container.get_blob_client(f"{job_id}.json").upload_blob(
             payload,
             overwrite=True,
-            content_settings=ContentSettings(content_type='application/json'),
+            content_settings=ContentSettings(content_type="application/json"),
         )
 
 
 def _validate_job_id(job_id: str) -> str:
     if not JOB_ID_PATTERN.fullmatch(job_id):
-        raise ValueError('Invalid ANY.RUN job ID.')
+        raise ValueError("Invalid ANY.RUN job ID.")
     return job_id
 
 
 def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def _json_safe(value: Any) -> Any:

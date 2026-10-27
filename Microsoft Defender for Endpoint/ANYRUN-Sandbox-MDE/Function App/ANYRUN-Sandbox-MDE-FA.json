@@ -76,6 +76,13 @@
         "description": "API Key of your ANY.RUN Account."
       }
     },
+    "ANYRUN_BASE_DOMAIN": {
+      "type": "string",
+      "defaultValue": "any.run",
+      "metadata": {
+        "description": "The base domain for the ANY.RUN connection. By default, the domain is any.run."
+      }
+    },
     "DefenderIndicatorAction": {
       "type": "string",
       "defaultValue": "Audit",
@@ -292,6 +299,10 @@
               "value": "[concat('API-KEY ', parameters('ANYRUN_API_KEY'))]"
             },
             {
+              "name": "ANYRUN_BASE_DOMAIN",
+              "value": "[parameters('ANYRUN_BASE_DOMAIN')]"
+            },
+            {
               "name": "DefenderIndicatorAction",
               "value": "[parameters('DefenderIndicatorAction')]"
             },
@@ -306,7 +317,7 @@
             {
               "name": "AzureWebJobsStorage",
               "value": "[parameters('AzureStorageConnectionString')]"
-            },            
+            },
             {
               "name": "AzureBlobContainerName",
               "value": "[parameters('AzureBlobContainerName')]"

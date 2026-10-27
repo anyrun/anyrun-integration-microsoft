@@ -4,7 +4,7 @@
 class SandboxAPIError(RuntimeError):
     def __init__(self, status_code: int, description: str):
         self.status_code = status_code
-        super().__init__(f'ANY.RUN HTTP {status_code}: {description}')
+        super().__init__(f"ANY.RUN HTTP {status_code}: {description}")
 
 
 class SandboxTransportError(RuntimeError):

@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Iterable
 from urllib.parse import urlsplit, urlunsplit
 
-
 ABSOLUTE_URL_PATTERN = re.compile(r'https?://[^\s<>"\']+', re.IGNORECASE)
 BARE_QUERY_PATTERN = re.compile(
     r'\?(?=[A-Za-z0-9_.~%-]+=)[^\s<>"\']+',
@@ -18,9 +17,9 @@ SECRET_ASSIGNMENT_PATTERN = re.compile(
     r'\s*[:=]\s*["\']?)[^"\'\s,;}]+'
 )
 AUTHORIZATION_PATTERN = re.compile(
-    r'(?i)\bauthorization\s*[:=]\s*(?:bearer\s+)?[^\s,;}\]]+'
+    r"(?i)\bauthorization\s*[:=]\s*(?:bearer\s+)?[^\s,;}\]]+"
 )
-BEARER_PATTERN = re.compile(r'(?i)\bbearer\s+[A-Za-z0-9._~+/=-]+')
+BEARER_PATTERN = re.compile(r"(?i)\bbearer\s+[A-Za-z0-9._~+/=-]+")
 
 
 def get_env_variable(name: str, default: str | None = None) -> str:
@@ -34,31 +33,41 @@ def get_env_variable(name: str, default: str | None = None) -> str:
     if not (variable := os.environ.get(name)):
         if default is not None:
             return default
-        raise ValueError(f'Environment variable {name} is not set.')
+        raise ValueError(f"Environment variable {name} is not set.")
     return variable
+
+
+def get_anyrun_base_domain() -> str:
+    """ANY.RUN base domain."""
+    return get_env_variable("ANYRUN_BASE_DOMAIN", default="any.run")
+
+
+def get_task_url(task_uuid: str) -> str:
+    """Link to the interactive analysis on the configured ANY.RUN server."""
+    return f"https://app.{get_anyrun_base_domain()}/tasks/{task_uuid}"
 
 
 def sanitize_error_text(value: object, limit: int = 500) -> str:
     """Remove credentials and URL query data before externalizing an error."""
-    text = ' '.join(str(value).split())
+    text = " ".join(str(value).split())
     text = ABSOLUTE_URL_PATTERN.sub(_redact_absolute_url, text)
     # requests can report only a relative request target ("with url: /...?sig=").
-    text = BARE_QUERY_PATTERN.sub('?[REDACTED]', text)
-    text = SECRET_ASSIGNMENT_PATTERN.sub(r'\1[REDACTED]', text)
-    text = AUTHORIZATION_PATTERN.sub('authorization=[REDACTED]', text)
-    text = BEARER_PATTERN.sub('Bearer [REDACTED]', text)
-    return text[:limit] or 'unspecified error'
+    text = BARE_QUERY_PATTERN.sub("?[REDACTED]", text)
+    text = SECRET_ASSIGNMENT_PATTERN.sub(r"\1[REDACTED]", text)
+    text = AUTHORIZATION_PATTERN.sub("authorization=[REDACTED]", text)
+    text = BEARER_PATTERN.sub("Bearer [REDACTED]", text)
+    return text[:limit] or "unspecified error"
 
 
 def _redact_absolute_url(match: re.Match[str]) -> str:
     raw_url = match.group(0)
-    suffix = ''
-    while raw_url and raw_url[-1] in '.,;)]}':
+    suffix = ""
+    while raw_url and raw_url[-1] in ".,;)]}":
         suffix = raw_url[-1] + suffix
         raw_url = raw_url[:-1]
     parsed = urlsplit(raw_url)
-    query = '[REDACTED]' if parsed.query else ''
-    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, query, '')) + suffix
+    query = "[REDACTED]" if parsed.query else ""
+    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, query, "")) + suffix
 
 
 def prepare_url_analysis_options(analysis_options: dict) -> dict:
@@ -68,20 +77,16 @@ def prepare_url_analysis_options(analysis_options: dict) -> dict:
     :param analysis_options: Analysis options
     :return: Url analysis options
     """
-    analysis_options.pop('obj_ext_startfolder', None)
-    analysis_options.pop('obj_ext_cmd', None)
-    analysis_options.pop('obj_ext_extension', None)
-    analysis_options.pop('run_as_root', None)
-    analysis_options.pop('obj_force_elevation', None)
+    analysis_options.pop("obj_ext_startfolder", None)
+    analysis_options.pop("obj_ext_cmd", None)
+    analysis_options.pop("obj_ext_extension", None)
+    analysis_options.pop("run_as_root", None)
+    analysis_options.pop("obj_force_elevation", None)
 
     return analysis_options
 
 
-def generate_filepath(
-    filename: str,
-    filepath: str,
-    machine_os_platform: str
-) -> str:
+def generate_filepath(filename: str, filepath: str, machine_os_platform: str) -> str:
     """
     Generates filepath according to the os platform
 
@@ -90,10 +95,10 @@ def generate_filepath(
     :param machine_os_platform: OS platform type
     :return: Prepared filepath
     """
-    if machine_os_platform == 'windows':
-        filepath = str(Path(f'{filename}\\{filepath}'))
-    elif machine_os_platform == 'linux':
-        filepath = str(Path(f'{filename}/{filepath}'))
+    if machine_os_platform == "windows":
+        filepath = str(Path(f"{filename}\\{filepath}"))
+    elif machine_os_platform == "linux":
+        filepath = str(Path(f"{filename}/{filepath}"))
     return filepath
 
 
@@ -106,9 +111,9 @@ def generate_task_uuid_comment(evidence: str, task_uuid: str) -> str:
     :return: Text reference
     """
     return (
-        f'ANY.RUN Sandbox Analysis Started\n\n'
-        f'Evidence:\n{evidence}\n\n'
-        f'Link to interactive task:\nhttps://app.any.run/tasks/{task_uuid}'
+        f"ANY.RUN Sandbox Analysis Started\n\n"
+        f"Evidence:\n{evidence}\n\n"
+        f"Link to interactive task:\n{get_task_url(task_uuid)}"
     )
 
 
@@ -130,19 +135,19 @@ def generate_analysis_summary_comment(
     :return: Text report
     """
     indicators_note = (
-        'The indicators with Suspicious and Malicious severity can be found on the following path: '
-        'System/Settings/Endpoints/Rules/Indicators'
-        if indicators_imported else
-        'Indicator import into Microsoft Defender is disabled for this connector; '
-        'the indicators are listed only in the alert comments and the ANY.RUN report.'
+        "The indicators with Suspicious and Malicious severity can be found on the following path: "
+        "System/Settings/Endpoints/Rules/Indicators"
+        if indicators_imported
+        else "Indicator import into Microsoft Defender is disabled for this connector; "
+        "the indicators are listed only in the alert comments and the ANY.RUN report."
     )
     return (
-        f'ANY.RUN analysis of Evidence results:\n\n'
-        f'Evidence:\n{evidence}'
-        f'\n\nVerdict:\n{analysis_verdict}'
-        f'\n\nThreat score:\n{score}'
-        f'\n\nLink to interactive report:\n{task_url}'
-        f'\n\n{indicators_note}'
+        f"ANY.RUN analysis of Evidence results:\n\n"
+        f"Evidence:\n{evidence}"
+        f"\n\nVerdict:\n{analysis_verdict}"
+        f"\n\nThreat score:\n{score}"
+        f"\n\nLink to interactive report:\n{task_url}"
+        f"\n\n{indicators_note}"
     )
 
 
@@ -153,16 +158,16 @@ def generate_ioc_comment(indicators: Iterable[dict] | None) -> str:
     :param indicators: List of indicators
     :return: IOCs text table
     """
-    rows = 'Detected IOCs:'
+    rows = "Detected IOCs:"
 
     if not indicators:
-        return rows + 'No indicators found'
+        return rows + "No indicators found"
 
     for indicator in indicators:
         rows += (
-            f'\n\nType: {indicator.get("type").upper()}'
-            f'\nThreat level: {convert_reputation(indicator.get("reputation"))}'
-            f'\nIOC:\n{indicator.get("ioc")}'
+            f"\n\nType: {indicator.get('type').upper()}"
+            f"\nThreat level: {convert_reputation(indicator.get('reputation'))}"
+            f"\nIOC:\n{indicator.get('ioc')}"
         )
     return rows
 
@@ -174,7 +179,7 @@ def convert_reputation(reputation: int) -> str:
     :param reputation: IOC reputation
     :return: IOC Threat Level
     """
-    return {0: 'No info', 1: 'Suspicious', 2: 'Malicious'}.get(reputation)
+    return {0: "No info", 1: "Suspicious", 2: "Malicious"}.get(reputation)
 
 
 def clear_indicators(indicators: list[dict] | None) -> list[dict]:
@@ -187,5 +192,5 @@ def clear_indicators(indicators: list[dict] | None) -> list[dict]:
     return [
         indicator
         for indicator in (indicators or [])
-        if indicator.get('reputation') in (1, 2)
+        if indicator.get("reputation") in (1, 2)
     ]
